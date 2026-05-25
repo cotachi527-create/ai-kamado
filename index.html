@@ -1274,9 +1274,36 @@
     { url: 'https://zenn.dev/topics/prompt/feed',                    name: 'Zenn Prompt' },
   ];
 
-  const RSS2JSON       = 'https://api.rss2json.com/v1/api.json?count=4&rss_url=';
-  const NEWS_CACHE_KEY = 'ai_news_cache_v2';
+  const CORS_PROXY     = 'https://api.allorigins.win/raw?url=';
+  const NEWS_CACHE_KEY = 'ai_news_cache_v3';
   const NEWS_CACHE_TTL = 30 * 60 * 1000;
+
+  async function fetchFeedItems(feed) {
+    const res = await fetch(CORS_PROXY + encodeURIComponent(feed.url));
+    if (!res.ok) return [];
+    const text = await res.text();
+    const doc  = new DOMParser().parseFromString(text, 'application/xml');
+
+    // RSS 2.0
+    const rssItems = [...doc.querySelectorAll('item')];
+    if (rssItems.length) {
+      return rssItems.slice(0, 4).map(el => ({
+        title:   el.querySelector('title')?.textContent?.trim() || '',
+        link:    el.querySelector('link')?.textContent?.trim()  || '',
+        pubDate: el.querySelector('pubDate')?.textContent || el.querySelector('dc\\:date')?.textContent || '',
+        source:  feed.name,
+      })).filter(i => i.title && i.link);
+    }
+
+    // Atom
+    const atomItems = [...doc.querySelectorAll('entry')];
+    return atomItems.slice(0, 4).map(el => ({
+      title:   el.querySelector('title')?.textContent?.trim() || '',
+      link:    el.querySelector('link')?.getAttribute('href') || el.querySelector('link')?.textContent?.trim() || '',
+      pubDate: el.querySelector('updated')?.textContent || el.querySelector('published')?.textContent || '',
+      source:  feed.name,
+    })).filter(i => i.title && i.link);
+  }
 
   // ── Helpers ──
   function toDateStr(d) { return d.toLocaleDateString('sv-SE'); }
@@ -1534,13 +1561,8 @@
 
     for (const feed of RSS_FEEDS) {
       try {
-        const res  = await fetch(RSS2JSON + encodeURIComponent(feed.url));
-        if (!res.ok) continue;
-        const json = await res.json();
-        if (!json.items || !json.items.length) continue;
-        json.items.slice(0, 4).forEach(item => {
-          items.push({ title: item.title, link: item.link, pubDate: item.pubDate, source: feed.name });
-        });
+        const feedItems = await fetchFeedItems(feed);
+        items.push(...feedItems);
       } catch { /* ignore */ }
     }
 
