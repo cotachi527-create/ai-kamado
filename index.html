@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
   <title>AI ダッシュボード</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -637,6 +638,9 @@
       border-radius: 10px;
       white-space: pre-wrap;
       word-break: break-all;
+      min-height: 60px;
+      max-height: 220px;
+      overflow-y: auto;
     }
 
     .btn-use {
@@ -867,10 +871,12 @@
       border-radius: 16px;
       width: 100%;
       max-width: 440px;
+      max-height: 85dvh;
       padding: 24px;
       display: flex;
       flex-direction: column;
       gap: 16px;
+      overflow-y: auto;
     }
 
     .modal-header {
@@ -1101,6 +1107,7 @@
           <option value="ギガジン">ギガジン</option>
           <option value="ITmedia AI+">ITmedia AI+</option>
           <option value="WIRED.jp">WIRED.jp</option>
+          <option value="Zenn Prompt">Zenn Prompt</option>
         </select>
         <button class="news-refresh" onclick="loadNews(true)">↻ 更新</button>
       </div>
@@ -1264,6 +1271,7 @@
     { url: 'https://gigazine.net/news/rss_2.0/',                    name: 'ギガジン'     },
     { url: 'https://rss.itmedia.co.jp/rss/2.0/aiplus.xml',          name: 'ITmedia AI+' },
     { url: 'https://wired.jp/rss/',                                  name: 'WIRED.jp'    },
+    { url: 'https://zenn.dev/topics/prompt/feed',                    name: 'Zenn Prompt' },
   ];
 
   const RSS2JSON       = 'https://api.rss2json.com/v1/api.json?count=4&rss_url=';
