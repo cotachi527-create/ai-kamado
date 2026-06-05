@@ -29,7 +29,6 @@
       min-height: 100dvh;
     }
 
-    /* ── Layout ── */
     .layout {
       display: grid;
       grid-template-columns: 2fr 6fr 2fr;
@@ -37,7 +36,6 @@
       min-height: 100dvh;
     }
 
-    /* ── Sidebar ── */
     .sidebar {
       border-right: 1px solid var(--border);
       padding: 28px 16px;
@@ -46,1028 +44,183 @@
       gap: 20px;
     }
 
-    .sidebar-tool-name {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.12em;
-      padding: 0 4px;
-    }
+    .sidebar-tool-name { font-size: 1rem; font-weight: 600; color: var(--text); letter-spacing: 0.12em; padding: 0 4px; }
+    .sidebar-logo { font-size: 0.72rem; font-weight: 600; color: var(--text-sub); letter-spacing: 0.18em; text-transform: uppercase; padding: 0 4px; }
+    .sidebar-date { font-size: 0.75rem; color: var(--text-sub); padding: 0 4px; margin-top: -14px; }
+    .sidebar-section-title { font-size: 0.65rem; font-weight: 600; color: var(--text-sub); letter-spacing: 0.15em; text-transform: uppercase; padding: 0 4px; margin-bottom: 4px; }
 
-    .sidebar-logo {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      padding: 0 4px;
-    }
-
-    .sidebar-date {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-      padding: 0 4px;
-      margin-top: -14px;
-    }
-
-    .sidebar-section-title {
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0 4px;
-      margin-bottom: 4px;
-    }
-
-    .task-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.15s;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    .task-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 10px; cursor: pointer; transition: background 0.15s; -webkit-tap-highlight-color: transparent; }
     .task-item:hover { background: var(--panel2); }
-
-    .task-item.active {
-      background: rgba(91, 138, 245, 0.12);
-    }
-
-    .task-check {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 1.5px solid #3a4060;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: background 0.2s, border-color 0.2s;
-    }
-
-    .task-item.done .task-check {
-      background: var(--accent2);
-      border-color: var(--accent2);
-    }
-
-    .task-check-svg {
-      display: none;
-      width: 10px; height: 10px;
-    }
-
+    .task-item.active { background: rgba(91, 138, 245, 0.12); }
+    .task-check { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #3a4060; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s, border-color 0.2s; }
+    .task-item.done .task-check { background: var(--accent2); border-color: var(--accent2); }
+    .task-check-svg { display: none; width: 10px; height: 10px; }
     .task-item.done .task-check-svg { display: block; }
-
     .task-info { flex: 1; min-width: 0; }
-
-    .task-name {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1;
-    }
-
+    .task-name { font-size: 0.8rem; font-weight: 500; color: var(--text); line-height: 1; }
     .task-item.done .task-name { color: var(--text-sub); }
-
-    .task-app {
-      font-size: 0.62rem;
-      color: var(--text-sub);
-      margin-top: 2px;
-    }
-
-    .task-emoji-sm {
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-
-    .task-app-link {
-      text-decoration: none;
-      border-radius: 6px;
-      padding: 2px 4px;
-      transition: background 0.15s, transform 0.1s;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .task-app-link:hover {
-      background: rgba(255,255,255,0.08);
-    }
-
-    .task-app-link:active {
-      transform: scale(0.9);
-    }
-
-    .sidebar-back {
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.72rem;
-      color: var(--text-sub);
-      text-decoration: none;
-      padding: 8px 10px;
-      border-radius: 8px;
-      transition: background 0.15s, color 0.15s;
-    }
-
+    .task-app { font-size: 0.62rem; color: var(--text-sub); margin-top: 2px; }
+    .task-emoji-sm { font-size: 1rem; flex-shrink: 0; }
+    .task-app-link { text-decoration: none; border-radius: 6px; padding: 2px 4px; transition: background 0.15s, transform 0.1s; -webkit-tap-highlight-color: transparent; }
+    .task-app-link:hover { background: rgba(255,255,255,0.08); }
+    .task-app-link:active { transform: scale(0.9); }
+    .sidebar-back { margin-top: auto; display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--text-sub); text-decoration: none; padding: 8px 10px; border-radius: 8px; transition: background 0.15s, color 0.15s; }
     .sidebar-back:hover { background: var(--panel2); color: var(--text); }
 
-    /* ── Main ── */
-    .main {
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-    }
+    .main { display: flex; flex-direction: column; overflow-y: auto; }
 
-    /* News */
-    .news-section {
-      padding: 24px 24px 0;
-      flex-shrink: 0;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .section-header h2 {
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      color: var(--text);
-    }
-
-    .badge {
-      font-size: 0.62rem;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 20px;
-      background: rgba(91, 138, 245, 0.18);
-      color: var(--accent);
-      letter-spacing: 0.04em;
-    }
-
-    .news-refresh {
-      margin-left: auto;
-      background: none;
-      border: none;
-      color: var(--text-sub);
-      font-size: 0.72rem;
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 6px;
-      transition: background 0.15s, color 0.15s;
-      font-family: inherit;
-    }
-
+    .news-section { padding: 24px 24px 0; flex-shrink: 0; }
+    .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .section-header h2 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; color: var(--text); }
+    .badge { font-size: 0.62rem; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: rgba(91, 138, 245, 0.18); color: var(--accent); letter-spacing: 0.04em; }
+    .news-refresh { margin-left: auto; background: none; border: none; color: var(--text-sub); font-size: 0.72rem; cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: background 0.15s, color 0.15s; font-family: inherit; }
     .news-refresh:hover { background: var(--panel2); color: var(--text); }
-
-    .news-source-select {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      color: var(--text-sub);
-      font-size: 0.72rem;
-      padding: 4px 22px 4px 8px;
-      border-radius: 6px;
-      font-family: inherit;
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a8099' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 6px center;
-      transition: border-color 0.15s, color 0.15s;
-    }
-
-    .news-source-select:focus {
-      outline: none;
-      border-color: var(--accent);
-      color: var(--text);
-    }
-
-    .news-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .news-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: background 0.15s;
-    }
-
+    .news-source-select { background: var(--panel); border: 1px solid var(--border); color: var(--text-sub); font-size: 0.72rem; padding: 4px 22px 4px 8px; border-radius: 6px; font-family: inherit; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a8099' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 6px center; transition: border-color 0.15s, color 0.15s; }
+    .news-source-select:focus { outline: none; border-color: var(--accent); color: var(--text); }
+    .news-list { display: flex; flex-direction: column; gap: 2px; }
+    .news-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; text-decoration: none; transition: background 0.15s; }
     .news-item:hover { background: var(--panel2); }
+    .news-title { flex: 1; font-size: 0.78rem; color: var(--text); line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+    .news-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
+    .news-source { font-size: 0.62rem; color: var(--text-sub); white-space: nowrap; }
+    .news-time { font-size: 0.6rem; color: #4a5070; white-space: nowrap; }
+    .news-throw { flex-shrink: 0; background: none; border: 1px solid var(--border); color: var(--text-sub); font-size: 0.65rem; padding: 3px 8px; border-radius: 6px; cursor: pointer; font-family: inherit; white-space: nowrap; transition: background 0.15s, color 0.15s, border-color 0.15s; margin-left: 6px; }
+    .news-throw:hover { background: rgba(62, 207, 142, 0.12); border-color: var(--accent2); color: var(--accent2); }
+    .news-loading { font-size: 0.75rem; color: var(--text-sub); padding: 12px; text-align: center; }
 
-    .news-title {
-      flex: 1;
-      font-size: 0.78rem;
-      color: var(--text);
-      line-height: 1.4;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-    }
-
-    .news-meta {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 2px;
-      flex-shrink: 0;
-    }
-
-    .news-source {
-      font-size: 0.62rem;
-      color: var(--text-sub);
-      white-space: nowrap;
-    }
-
-    .news-time {
-      font-size: 0.6rem;
-      color: #4a5070;
-      white-space: nowrap;
-    }
-
-    .news-throw {
-      flex-shrink: 0;
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-sub);
-      font-size: 0.65rem;
-      padding: 3px 8px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: inherit;
-      white-space: nowrap;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-      margin-left: 6px;
-    }
-
-    .news-throw:hover {
-      background: rgba(62, 207, 142, 0.12);
-      border-color: var(--accent2);
-      color: var(--accent2);
-    }
-
-    .news-loading {
-      font-size: 0.75rem;
-      color: var(--text-sub);
-      padding: 12px;
-      text-align: center;
-    }
-
-    /* ── Weekly history ── */
-    .history-section {
-      padding: 0;
-      flex-shrink: 0;
-    }
-
-    .sidebar-history {
-      flex-shrink: 0;
-    }
-
-    .history-grid {
-      display: grid;
-      grid-template-columns: 30px repeat(7, 1fr);
-      gap: 3px 2px;
-    }
-
-    .hg-cell {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 22px;
-      border-radius: 5px;
-      font-size: 0.55rem;
-    }
-
+    .sidebar-history { flex-shrink: 0; }
+    .history-grid { display: grid; grid-template-columns: 30px repeat(7, 1fr); gap: 3px 2px; }
+    .hg-cell { display: flex; align-items: center; justify-content: center; height: 22px; border-radius: 5px; font-size: 0.55rem; }
     .hg-empty { /* spacer */ }
-
-    .hg-day-header {
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .hg-day-header.today-col {
-      background: rgba(91, 138, 245, 0.15);
-      border-radius: 7px;
-    }
-
-    .hg-day-label {
-      font-size: 0.52rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      letter-spacing: 0;
-    }
-
+    .hg-day-header { flex-direction: column; gap: 1px; }
+    .hg-day-header.today-col { background: rgba(91, 138, 245, 0.15); border-radius: 7px; }
+    .hg-day-label { font-size: 0.52rem; font-weight: 600; color: var(--text-sub); letter-spacing: 0; }
     .hg-day-header.today-col .hg-day-label { color: var(--accent); }
-
-    .hg-date-num {
-      font-size: 0.52rem;
-      color: #3a4060;
-    }
-
-    .hg-task-label {
-      font-size: 0.55rem;
-      font-weight: 500;
-      color: var(--text-sub);
-      justify-content: flex-start;
-      padding-left: 1px;
-      height: auto;
-      padding-top: 1px;
-      padding-bottom: 1px;
-    }
-
-    .hg-check {
-      background-color: rgba(255,255,255,0.04);
-    }
-
-    .hg-check.done {
-      background-color: rgba(62, 207, 142, 0.2);
-    }
-
-    .hg-check.today-col {
-      background-color: rgba(91, 138, 245, 0.1);
-    }
-
-    .hg-check.done.today-col {
-      background-color: rgba(62, 207, 142, 0.3);
-    }
-
-    .hg-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background-color: #2a2f45;
-    }
-
+    .hg-date-num { font-size: 0.52rem; color: #3a4060; }
+    .hg-task-label { font-size: 0.55rem; font-weight: 500; color: var(--text-sub); justify-content: flex-start; padding-left: 1px; height: auto; padding-top: 1px; padding-bottom: 1px; }
+    .hg-check { background-color: rgba(255,255,255,0.04); }
+    .hg-check.done { background-color: rgba(62, 207, 142, 0.2); }
+    .hg-check.today-col { background-color: rgba(91, 138, 245, 0.1); }
+    .hg-check.done.today-col { background-color: rgba(62, 207, 142, 0.3); }
+    .hg-dot { width: 5px; height: 5px; border-radius: 50%; background-color: #2a2f45; }
     .hg-check.done .hg-dot { display: none; }
-
-    .hg-tick {
-      display: none;
-      color: var(--accent2);
-      font-size: 0.6rem;
-      font-weight: 700;
-    }
-
+    .hg-tick { display: none; color: var(--accent2); font-size: 0.6rem; font-weight: 700; }
     .hg-check.done .hg-tick { display: block; }
 
-    /* Creation board */
-    .board-section {
-      flex: 1;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .board-controls {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .tool-select {
-      flex: 1;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.8rem;
-      padding: 9px 12px;
-      border-radius: 10px;
-      font-family: inherit;
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8099' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 30px;
-      transition: border-color 0.15s;
-    }
-
-    .tool-select:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .prompt-area {
-      flex: 1;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.15s;
-    }
-
-    .prompt-area:focus-within {
-      border-color: rgba(91, 138, 245, 0.4);
-    }
-
-    .prompt-input {
-      flex: 1;
-      width: 100%;
-      min-height: 120px;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      font-size: 0.82rem;
-      font-family: inherit;
-      padding: 16px;
-      resize: none;
-      line-height: 1.6;
-    }
-
+    .board-section { flex: 1; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .board-controls { display: flex; gap: 10px; align-items: center; }
+    .tool-select { flex: 1; background: var(--panel); border: 1px solid var(--border); color: var(--text); font-size: 0.8rem; padding: 9px 12px; border-radius: 10px; font-family: inherit; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a8099' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; transition: border-color 0.15s; }
+    .tool-select:focus { outline: none; border-color: var(--accent); }
+    .prompt-area { flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.15s; }
+    .prompt-area:focus-within { border-color: rgba(91, 138, 245, 0.4); }
+    .prompt-input { flex: 1; width: 100%; min-height: 120px; background: transparent; border: none; color: var(--text); font-size: 0.82rem; font-family: inherit; padding: 16px; resize: none; line-height: 1.6; }
     .prompt-input::placeholder { color: #3a4060; }
     .prompt-input:focus { outline: none; }
-
-    .board-footer {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-top: 1px solid var(--border);
-    }
-
-    .clear-btn {
-      background: none;
-      border: none;
-      color: var(--text-sub);
-      font-size: 0.72rem;
-      cursor: pointer;
-      padding: 6px 10px;
-      border-radius: 7px;
-      font-family: inherit;
-      transition: background 0.15s, color 0.15s;
-      margin-right: auto;
-    }
-
+    .board-footer { display: flex; justify-content: flex-end; align-items: center; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--border); }
+    .clear-btn { background: none; border: none; color: var(--text-sub); font-size: 0.72rem; cursor: pointer; padding: 6px 10px; border-radius: 7px; font-family: inherit; transition: background 0.15s, color 0.15s; margin-right: auto; }
     .clear-btn:hover { background: var(--panel2); color: var(--text); }
-
-    .generate-btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 9px 24px;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      font-family: inherit;
-      cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
-      letter-spacing: 0.04em;
-    }
-
+    .generate-btn { background: var(--accent); color: #fff; border: none; padding: 9px 24px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; font-family: inherit; cursor: pointer; transition: opacity 0.15s, transform 0.1s; letter-spacing: 0.04em; }
     .generate-btn:hover { opacity: 0.88; }
     .generate-btn:active { transform: scale(0.97); }
+    .generate-btn.copied { background: var(--accent2); }
 
-    .generate-btn.copied {
-      background: var(--accent2);
-    }
-
-    /* ── Throw flash animation ── */
     @keyframes throwFlash {
       0%   { border-color: var(--accent2); background: rgba(62,207,142,0.08); }
       60%  { border-color: var(--accent2); background: rgba(62,207,142,0.08); }
       100% { border-color: rgba(255,255,255,0.07); background: var(--panel); }
     }
+    .prompt-area.flash-append { animation: throwFlash 0.7s ease forwards; }
 
-    .prompt-area.flash-append {
-      animation: throwFlash 0.7s ease forwards;
-    }
-
-    /* ── Icon buttons (mic / attach) ── */
-    .icon-btn {
-      flex-shrink: 0;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      color: var(--text);
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      font-size: 1.05rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s, border-color 0.15s;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    .icon-btn { flex-shrink: 0; background: var(--panel); border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 10px; font-size: 1.05rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s, border-color 0.15s; user-select: none; -webkit-tap-highlight-color: transparent; }
     .icon-btn:hover { background: var(--panel2); }
+    .icon-btn.recording { border-color: var(--danger); background: rgba(245, 101, 101, 0.12); animation: pulse 1s infinite; }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(245,101,101,0.4); } 50% { box-shadow: 0 0 0 6px rgba(245,101,101,0); } }
+    .mic-status { font-size: 0.7rem; color: var(--danger); flex: 1; letter-spacing: 0.04em; }
 
-    .icon-btn.recording {
-      border-color: var(--danger);
-      background: rgba(245, 101, 101, 0.12);
-      animation: pulse 1s infinite;
-    }
+    .image-preview-wrap { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--panel2); }
+    .image-preview { width: 100%; max-height: 200px; object-fit: contain; display: block; background: var(--panel2); }
+    .image-remove { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6); border: none; color: #fff; width: 26px; height: 26px; border-radius: 50%; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .image-hint { display: block; font-size: 0.65rem; color: var(--text-sub); padding: 6px 12px 8px; letter-spacing: 0.03em; }
 
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(245,101,101,0.4); }
-      50%       { box-shadow: 0 0 0 6px rgba(245,101,101,0); }
-    }
-
-    .mic-status {
-      font-size: 0.7rem;
-      color: var(--danger);
-      flex: 1;
-      letter-spacing: 0.04em;
-    }
-
-    /* ── Image preview ── */
-    .image-preview-wrap {
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--panel2);
-    }
-
-    .image-preview {
-      width: 100%;
-      max-height: 200px;
-      object-fit: contain;
-      display: block;
-      background: var(--panel2);
-    }
-
-    .image-remove {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(0,0,0,0.6);
-      border: none;
-      color: #fff;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      font-size: 0.75rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .image-hint {
-      display: block;
-      font-size: 0.65rem;
-      color: var(--text-sub);
-      padding: 6px 12px 8px;
-      letter-spacing: 0.03em;
-    }
-
-    /* ── Gallery detail modal ── */
-    .gallery-detail-prompt {
-      font-size: 0.78rem;
-      color: var(--text);
-      line-height: 1.7;
-      background: var(--panel2);
-      padding: 12px;
-      border-radius: 10px;
-      white-space: pre-wrap;
-      word-break: break-all;
-      min-height: 60px;
-      max-height: 220px;
-      overflow-y: auto;
-    }
-
-    .btn-use {
-      background: var(--accent2);
-      border: none;
-      color: #fff;
-      padding: 9px 22px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      transition: opacity 0.15s;
-    }
-
+    .gallery-detail-prompt { font-size: 0.78rem; color: var(--text); line-height: 1.7; background: var(--panel2); padding: 12px; border-radius: 10px; white-space: pre-wrap; word-break: break-all; min-height: 60px; max-height: 220px; overflow-y: auto; }
+    .btn-use { background: var(--accent2); border: none; color: #fff; padding: 9px 22px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: opacity 0.15s; }
     .btn-use:hover { opacity: 0.88; }
 
-    /* ── Gallery ── */
-    .gallery {
-      border-left: 1px solid var(--border);
-      padding: 24px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      overflow-y: auto;
-    }
-
-    .gallery-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .gallery-header h2 {
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      color: var(--text);
-    }
-
-    .gallery-count {
-      font-size: 0.65rem;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 20px;
-      background: var(--panel2);
-      color: var(--text-sub);
-    }
-
-    .gallery-add {
-      margin-left: auto;
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-sub);
-      font-size: 1.1rem;
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s, color 0.15s;
-      font-family: inherit;
-    }
-
+    .gallery { border-left: 1px solid var(--border); padding: 24px 16px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+    .gallery-header { display: flex; align-items: center; gap: 8px; }
+    .gallery-header h2 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; color: var(--text); }
+    .gallery-count { font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 20px; background: var(--panel2); color: var(--text-sub); }
+    .gallery-add { margin-left: auto; background: none; border: 1px solid var(--border); color: var(--text-sub); font-size: 1.1rem; width: 28px; height: 28px; border-radius: 7px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s; font-family: inherit; }
     .gallery-add:hover { background: var(--panel2); color: var(--text); }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .gallery-item {
-      border-radius: 10px;
-      overflow: hidden;
-      background: var(--panel);
-      border: 1.5px solid transparent;
-      cursor: pointer;
-      transition: border-color 0.15s, transform 0.1s;
-    }
-
+    .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .gallery-item { border-radius: 10px; overflow: hidden; background: var(--panel); border: 1.5px solid transparent; cursor: pointer; transition: border-color 0.15s, transform 0.1s; }
     .gallery-item:hover { transform: scale(1.02); }
     .gallery-item.selected { border-color: var(--accent); }
-
-    .gallery-thumb {
-      width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      display: block;
-      background: var(--panel2);
-    }
-
-    .gallery-thumb-placeholder {
-      width: 100%;
-      aspect-ratio: 1;
-      background: linear-gradient(135deg, #1e2130 0%, #252840 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-    }
-
-    .gallery-info {
-      padding: 8px 9px;
-    }
-
-    .gallery-title {
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: var(--text);
-      line-height: 1.3;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .gallery-date {
-      font-size: 0.58rem;
-      color: var(--text-sub);
-      margin-top: 2px;
-    }
-
-    .gallery-empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--text-sub);
-      padding: 24px 0;
-      line-height: 1.8;
-    }
-
-    .show-all-btn {
-      width: 100%;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      color: var(--text-sub);
-      font-size: 0.75rem;
-      padding: 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.15s, color 0.15s;
-      margin-top: auto;
-    }
-
+    .gallery-thumb { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; background: var(--panel2); }
+    .gallery-thumb-placeholder { width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, #1e2130 0%, #252840 100%); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .gallery-info { padding: 8px 9px; }
+    .gallery-title { font-size: 0.7rem; font-weight: 500; color: var(--text); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .gallery-date { font-size: 0.58rem; color: var(--text-sub); margin-top: 2px; }
+    .gallery-empty { grid-column: 1 / -1; text-align: center; font-size: 0.75rem; color: var(--text-sub); padding: 24px 0; line-height: 1.8; }
+    .show-all-btn { width: 100%; background: var(--panel); border: 1px solid var(--border); color: var(--text-sub); font-size: 0.75rem; padding: 10px; border-radius: 10px; cursor: pointer; font-family: inherit; transition: background 0.15s, color 0.15s; margin-top: auto; }
     .show-all-btn:hover { background: var(--panel2); color: var(--text); }
 
-    /* ── Folder selector ── */
-    .folder-bar {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .folder-status {
-      font-size: 0.68rem;
-      color: var(--text-sub);
-      flex: 1;
-      min-width: 0;
-    }
-
+    .folder-bar { display: flex; align-items: center; gap: 6px; }
+    .folder-status { font-size: 0.68rem; color: var(--text-sub); flex: 1; min-width: 0; }
     .folder-status.connected { color: var(--accent2); }
-
-    .folder-name {
-      max-width: 90px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      display: inline-block;
-      vertical-align: bottom;
-    }
-
-    .folder-select-btn {
-      width: 100%;
-      background: none;
-      border: 1px dashed rgba(91,138,245,0.35);
-      color: var(--accent);
-      font-size: 0.72rem;
-      padding: 8px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.15s, border-color 0.15s;
-      text-align: left;
-    }
-
-    .folder-select-btn:hover {
-      background: rgba(91,138,245,0.08);
-      border-color: var(--accent);
-    }
-
-    .folder-change-btn, .folder-disconnect-btn {
-      background: none;
-      border: none;
-      font-size: 0.65rem;
-      cursor: pointer;
-      padding: 3px 6px;
-      border-radius: 5px;
-      font-family: inherit;
-      transition: background 0.15s;
-      flex-shrink: 0;
-    }
-
+    .folder-name { max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: bottom; }
+    .folder-select-btn { width: 100%; background: none; border: 1px dashed rgba(91,138,245,0.35); color: var(--accent); font-size: 0.72rem; padding: 8px 10px; border-radius: 8px; cursor: pointer; font-family: inherit; transition: background 0.15s, border-color 0.15s; text-align: left; }
+    .folder-select-btn:hover { background: rgba(91,138,245,0.08); border-color: var(--accent); }
+    .folder-change-btn, .folder-disconnect-btn { background: none; border: none; font-size: 0.65rem; cursor: pointer; padding: 3px 6px; border-radius: 5px; font-family: inherit; transition: background 0.15s; flex-shrink: 0; }
     .folder-change-btn { color: var(--text-sub); }
     .folder-change-btn:hover { background: var(--panel2); color: var(--text); }
     .folder-disconnect-btn { color: var(--danger); }
     .folder-disconnect-btn:hover { background: rgba(245,101,101,0.12); }
 
-    /* ── Modal ── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
     .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      width: 100%;
-      max-width: 440px;
-      max-height: 85dvh;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      overflow-y: auto;
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .modal-header h3 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-    }
-
-    .modal-close {
-      background: none;
-      border: none;
-      color: var(--text-sub);
-      font-size: 1.2rem;
-      cursor: pointer;
-      padding: 4px;
-      line-height: 1;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .form-label {
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: var(--text-sub);
-      letter-spacing: 0.08em;
-    }
-
-    .form-input, .form-select, .form-textarea {
-      background: var(--panel2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.82rem;
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-family: inherit;
-      transition: border-color 0.15s;
-    }
-
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; width: 100%; max-width: 440px; max-height: 85dvh; padding: 24px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; }
+    .modal-header h3 { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.06em; }
+    .modal-close { background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; padding: 4px; line-height: 1; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-label { font-size: 0.7rem; font-weight: 500; color: var(--text-sub); letter-spacing: 0.08em; }
+    .form-input, .form-select, .form-textarea { background: var(--panel2); border: 1px solid var(--border); color: var(--text); font-size: 0.82rem; padding: 10px 12px; border-radius: 10px; font-family: inherit; transition: border-color 0.15s; }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--accent); }
     .form-textarea { resize: vertical; min-height: 80px; }
-
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-
-    .btn-cancel {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-sub);
-      padding: 9px 18px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.15s;
-    }
-
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+    .btn-cancel { background: none; border: 1px solid var(--border); color: var(--text-sub); padding: 9px 18px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-family: inherit; transition: background 0.15s; }
     .btn-cancel:hover { background: var(--panel2); }
-
-    .btn-save {
-      background: var(--accent);
-      border: none;
-      color: #fff;
-      padding: 9px 22px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      transition: opacity 0.15s;
-    }
-
+    .btn-save { background: var(--accent); border: none; color: #fff; padding: 9px 22px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: opacity 0.15s; }
     .btn-save:hover { opacity: 0.88; }
 
-    /* ── All creations modal ── */
-    .all-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      max-height: 60dvh;
-      overflow-y: auto;
-    }
-
-    .all-item {
-      border-radius: 10px;
-      overflow: hidden;
-      background: var(--panel2);
-      position: relative;
-    }
-
-    .all-item-delete {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background: rgba(0,0,0,0.6);
-      border: none;
-      color: #f56565;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      font-size: 0.7rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-
+    .all-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-height: 60dvh; overflow-y: auto; }
+    .all-item { border-radius: 10px; overflow: hidden; background: var(--panel2); position: relative; }
+    .all-item-delete { position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.6); border: none; color: #f56565; width: 22px; height: 22px; border-radius: 50%; font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.15s; }
     .all-item:hover .all-item-delete { opacity: 1; }
 
-    /* ── Responsive ── */
     @media (max-width: 680px) {
-      /* 1カラム縦積み */
-      .layout {
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* ── サイドバー（週間実績＋タスク） ── */
-      .sidebar {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        flex-direction: column;
-        padding: 20px 16px 16px;
-        gap: 14px;
-      }
-
+      .layout { display: flex; flex-direction: column; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--border); flex-direction: column; padding: 20px 16px 16px; gap: 14px; }
       .sidebar-logo { font-size: 0.8rem; }
       .sidebar-date { margin-top: -8px; }
-
-      /* タスクを横並びグリッドに */
-      #task-list {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4px;
-      }
-
+      #task-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
       .task-item { padding: 8px 10px; }
-
-      /* 週間実績グリッドを全幅に合わせる */
-      .history-grid {
-        grid-template-columns: 38px repeat(7, 1fr);
-        gap: 4px 3px;
-      }
-
-      .hg-cell      { height: 26px; font-size: 0.6rem; }
+      .history-grid { grid-template-columns: 38px repeat(7, 1fr); gap: 4px 3px; }
+      .hg-cell { height: 26px; font-size: 0.6rem; }
       .hg-day-label { font-size: 0.58rem; }
-      .hg-date-num  { font-size: 0.5rem; }
-      .hg-task-label{ font-size: 0.6rem; }
-      .hg-tick      { font-size: 0.65rem; }
-      .hg-dot       { width: 5px; height: 5px; }
-
+      .hg-date-num { font-size: 0.5rem; }
+      .hg-task-label { font-size: 0.6rem; }
+      .hg-tick { font-size: 0.65rem; }
+      .hg-dot { width: 5px; height: 5px; }
       .sidebar-back { align-self: flex-start; }
-
-      /* ── ニュース・作成ボード ── */
-      .news-section  { padding: 20px 16px 0; }
+      .news-section { padding: 20px 16px 0; }
       .board-section { padding: 20px 16px; }
-
       .prompt-input { min-height: 100px; }
-
-      /* ── ギャラリー ── */
-      .gallery {
-        border-left: none;
-        border-top: 1px solid var(--border);
-        padding: 20px 16px;
-      }
-
-      .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
+      .gallery { border-left: none; border-top: 1px solid var(--border); padding: 20px 16px; }
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
       .all-grid { grid-template-columns: repeat(2, 1fr); }
     }
-
     @media (max-width: 380px) {
       #task-list { grid-template-columns: 1fr; }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1077,8 +230,6 @@
 <body>
 
 <div class="layout">
-
-  <!-- ── Left Sidebar ── -->
   <aside class="sidebar">
     <p class="sidebar-tool-name">AIの竈</p>
     <p class="sidebar-logo">朝タスク</p>
@@ -1094,10 +245,7 @@
     <a class="sidebar-back" href="https://morning-routine.surge.sh/">← ルーティンに戻る</a>
   </aside>
 
-  <!-- ── Main ── -->
   <main class="main">
-
-    <!-- News -->
     <div class="news-section">
       <div class="section-header">
         <h2>AIニュース</h2>
@@ -1116,9 +264,6 @@
       </div>
     </div>
 
-    <!-- Weekly history (removed from main, now in sidebar) -->
-
-    <!-- Creation board -->
     <div class="board-section">
       <div class="section-header">
         <h2>AI作成ボード</h2>
@@ -1134,7 +279,6 @@
           <option value="https://ideogram.ai">Ideogram</option>
           <option value="https://suno.com">Suno</option>
         </select>
-
         <button class="icon-btn" id="mic-btn" onclick="toggleMic()" title="音声入力">🎤</button>
         <label class="icon-btn" title="画像を参照">
           📎
@@ -1142,7 +286,6 @@
         </label>
       </div>
 
-      <!-- Image preview -->
       <div class="image-preview-wrap" id="image-preview-wrap" style="display:none">
         <img id="image-preview" class="image-preview" alt="参照画像" />
         <button class="image-remove" onclick="removeImage()" title="削除">✕</button>
@@ -1151,7 +294,7 @@
 
       <div class="prompt-area">
         <textarea class="prompt-input" id="prompt-input"
-          placeholder="プロンプトを入力… （例：夜明けの海岸、波の泡、柔らかい光）\n🎤 マイクボタンで音声入力も可能です"></textarea>
+          placeholder="プロンプトを入力… （例：夜明けの海岸、波の泡、柔らかい光）&#10;🎤 マイクボタンで音声入力も可能です"></textarea>
         <div class="board-footer">
           <button class="clear-btn" onclick="clearPrompt()">クリア</button>
           <span class="mic-status" id="mic-status"></span>
@@ -1159,27 +302,21 @@
         </div>
       </div>
     </div>
-
   </main>
 
-  <!-- ── Gallery ── -->
   <aside class="gallery">
     <div class="gallery-header">
       <h2>過去の制作物</h2>
       <span class="gallery-count" id="gallery-count">0</span>
       <button class="gallery-add" onclick="openAddModal()" title="追加">＋</button>
     </div>
-
     <div class="folder-bar" id="folder-bar"></div>
-
     <div class="gallery-grid" id="gallery-grid"></div>
-
     <button class="show-all-btn" onclick="openAllModal()">すべて表示</button>
   </aside>
-
 </div>
 
-<!-- ── Gallery Detail Modal ── -->
+<!-- Gallery Detail Modal -->
 <div class="modal-overlay" id="detail-modal">
   <div class="modal" style="max-width:420px;">
     <div class="modal-header">
@@ -1201,7 +338,7 @@
   </div>
 </div>
 
-<!-- ── Add Creation Modal ── -->
+<!-- Add Creation Modal -->
 <div class="modal-overlay" id="add-modal">
   <div class="modal">
     <div class="modal-header">
@@ -1240,7 +377,7 @@
   </div>
 </div>
 
-<!-- ── All Creations Modal ── -->
+<!-- All Creations Modal -->
 <div class="modal-overlay" id="all-modal">
   <div class="modal" style="max-width:560px;">
     <div class="modal-header">
@@ -1267,24 +404,43 @@
   const STORAGE_PREFIX = 'routine_';
   const CREATIONS_KEY  = 'ai_creations';
 
+  // ── [FIX①] RSS: 複数プロキシを用意してフォールバック ──
   const RSS_FEEDS = [
-    { url: 'https://gigazine.net/news/rss_2.0/',                    name: 'ギガジン'     },
-    { url: 'https://rss.itmedia.co.jp/rss/2.0/aiplus.xml',          name: 'ITmedia AI+' },
-    { url: 'https://wired.jp/rss/',                                  name: 'WIRED.jp'    },
-    { url: 'https://zenn.dev/topics/prompt/feed',                    name: 'Zenn Prompt' },
+    { url: 'https://gigazine.net/news/rss_2.0/',           name: 'ギガジン'     },
+    { url: 'https://rss.itmedia.co.jp/rss/2.0/aiplus.xml', name: 'ITmedia AI+' },
+    { url: 'https://wired.jp/rss/',                        name: 'WIRED.jp'    },
+    { url: 'https://zenn.dev/topics/prompt/feed',          name: 'Zenn Prompt' },
   ];
 
-  const CORS_PROXY     = 'https://api.allorigins.win/raw?url=';
+  // 複数のCORSプロキシを順番に試す
+  const CORS_PROXIES = [
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  ];
+
   const NEWS_CACHE_KEY = 'ai_news_cache_v3';
   const NEWS_CACHE_TTL = 30 * 60 * 1000;
 
-  async function fetchFeedItems(feed) {
-    const res = await fetch(CORS_PROXY + encodeURIComponent(feed.url));
-    if (!res.ok) return [];
-    const text = await res.text();
-    const doc  = new DOMParser().parseFromString(text, 'application/xml');
+  // [FIX①] プロキシを順番に試してフェッチ
+  async function fetchWithFallback(url) {
+    for (const proxyFn of CORS_PROXIES) {
+      try {
+        const res = await fetch(proxyFn(url), { signal: AbortSignal.timeout(8000) });
+        if (res.ok) return res;
+      } catch { /* 次のプロキシを試す */ }
+    }
+    return null;
+  }
 
-    // RSS 2.0
+  async function fetchFeedItems(feed) {
+    const res = await fetchWithFallback(feed.url);
+    if (!res) return [];
+    let text;
+    try { text = await res.text(); } catch { return []; }
+
+    const doc = new DOMParser().parseFromString(text, 'application/xml');
+
     const rssItems = [...doc.querySelectorAll('item')];
     if (rssItems.length) {
       return rssItems.slice(0, 4).map(el => ({
@@ -1295,7 +451,6 @@
       })).filter(i => i.title && i.link);
     }
 
-    // Atom
     const atomItems = [...doc.querySelectorAll('entry')];
     return atomItems.slice(0, 4).map(el => ({
       title:   el.querySelector('title')?.textContent?.trim() || '',
@@ -1375,7 +530,6 @@
     return false;
   }
 
-  // ── フォルダ状態 ──
   let _folderHandle = null;
 
   function updateFolderUI() {
@@ -1404,22 +558,15 @@
       await _storeHandle(handle);
       updateFolderUI();
 
-      // 既存 localStorage データの移行を提案
-      const existing = (() => {
-        try { return JSON.parse(localStorage.getItem(CREATIONS_KEY) || '[]'); }
-        catch { return []; }
-      })();
+      const existing = _safeParseJSON(localStorage.getItem(CREATIONS_KEY), []);
       if (existing.length > 0) {
         const doMigrate = confirm(`localStorage に ${existing.length} 件の制作物があります。\n選択したフォルダに移行しますか？`);
         if (doMigrate) {
-          for (const c of existing) {
-            await _writeCreationFile(handle, c);
-          }
+          for (const c of existing) await _writeCreationFile(handle, c);
           localStorage.removeItem(CREATIONS_KEY);
           alert('移行が完了しました。');
         }
       }
-
       await buildGallery();
     } catch (e) {
       if (e.name !== 'AbortError') console.error(e);
@@ -1433,10 +580,7 @@
     await buildGallery();
   }
 
-  // ── ファイル操作 ──
-  function _fileName(creation) {
-    return `${creation.date}_${creation.id}.json`;
-  }
+  function _fileName(creation) { return `${creation.date}_${creation.id}.json`; }
 
   async function _writeCreationFile(dirHandle, creation) {
     const fh = await dirHandle.getFileHandle(_fileName(creation), { create: true });
@@ -1457,9 +601,42 @@
         const file = await handle.getFile();
         const c    = JSON.parse(await file.text());
         if (c && c.id) creations.push(c);
-      } catch { /* skip invalid */ }
+      } catch { /* skip */ }
     }
     return creations.sort((a, b) => a.id - b.id);
+  }
+
+  // ── [FIX②] localStorage の安全な読み書きヘルパー ──
+  function _safeParseJSON(str, fallback) {
+    try { return JSON.parse(str || 'null') ?? fallback; }
+    catch { return fallback; }
+  }
+
+  function _safeLSGet(key, fallback) {
+    try { return _safeParseJSON(localStorage.getItem(key), fallback); }
+    catch { return fallback; }
+  }
+
+  function _safeLSSet(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch (e) {
+      // localStorage が使えない場合（プライベートモード等）はメモリ内に保持
+      console.warn('localStorage unavailable:', e.message);
+      _memStore[key] = value;
+      return false;
+    }
+  }
+
+  // メモリフォールバック（localStorage が使えない環境用）
+  const _memStore = {};
+
+  function _memLSGet(key, fallback) {
+    return key in _memStore ? _memStore[key] : _safeLSGet(key, fallback);
+  }
+
+  function _memLSSet(key, value) {
+    _memStore[key] = value;
+    _safeLSSet(key, value);
   }
 
   // ── 制作物 CRUD ──
@@ -1467,8 +644,7 @@
     if (_folderHandle) {
       try { return await _readAllFromFolder(_folderHandle); } catch { /* fall through */ }
     }
-    try { return JSON.parse(localStorage.getItem(CREATIONS_KEY) || '[]'); }
-    catch { return []; }
+    return _memLSGet(CREATIONS_KEY, []);
   }
 
   async function appendCreation(creation) {
@@ -1477,7 +653,7 @@
     } else {
       const list = await loadCreations();
       list.push(creation);
-      localStorage.setItem(CREATIONS_KEY, JSON.stringify(list));
+      _memLSSet(CREATIONS_KEY, list);
     }
   }
 
@@ -1488,11 +664,11 @@
       if (target) await _deleteCreationFile(_folderHandle, target);
     } else {
       const list = (await loadCreations()).filter(c => c.id !== id);
-      localStorage.setItem(CREATIONS_KEY, JSON.stringify(list));
+      _memLSSet(CREATIONS_KEY, list);
     }
   }
 
-  // ── Task sidebar ──
+  // ── [FIX②] Task: localStorage を安全に読み書き ──
   function buildTaskList() {
     const now     = new Date();
     const dateStr = todayStr();
@@ -1500,9 +676,7 @@
     document.getElementById('sidebar-date').textContent =
       `${now.getMonth() + 1}/${now.getDate()}（${weekday}）`;
 
-    let done;
-    try { done = JSON.parse(localStorage.getItem(STORAGE_PREFIX + dateStr) || '[]'); }
-    catch { done = []; }
+    const done = _memLSGet(STORAGE_PREFIX + dateStr, []);
 
     const list = document.getElementById('task-list');
     list.innerHTML = '';
@@ -1532,52 +706,43 @@
 
   function toggleTask(label) {
     const dateStr = todayStr();
-    let done;
-    try { done = JSON.parse(localStorage.getItem(STORAGE_PREFIX + dateStr) || '[]'); }
-    catch { done = []; }
-
+    let done = _memLSGet(STORAGE_PREFIX + dateStr, []);
     done = done.includes(label) ? done.filter(l => l !== label) : [...done, label];
-    localStorage.setItem(STORAGE_PREFIX + dateStr, JSON.stringify(done));
+    _memLSSet(STORAGE_PREFIX + dateStr, done);
     buildTaskList();
     buildHistoryGrid();
   }
 
-  // ── News ──
+  // ── [FIX①] News: 並列フェッチ + プロキシフォールバック ──
   async function loadNews(force = false) {
     const list = document.getElementById('news-list');
 
     if (!force) {
-      try {
-        const cached = JSON.parse(localStorage.getItem(NEWS_CACHE_KEY) || 'null');
-        if (cached && Date.now() - cached.ts < NEWS_CACHE_TTL && cached.items.length) {
-          renderNews(cached.items);
-          return;
-        }
-      } catch { /* ignore */ }
+      const cached = _safeLSGet(NEWS_CACHE_KEY, null);
+      if (cached && Date.now() - cached.ts < NEWS_CACHE_TTL && cached.items?.length) {
+        renderNews(cached.items);
+        return;
+      }
     }
 
     list.innerHTML = '<p class="news-loading">読み込み中…</p>';
-    const items = [];
 
-    for (const feed of RSS_FEEDS) {
-      try {
-        const feedItems = await fetchFeedItems(feed);
-        items.push(...feedItems);
-      } catch { /* ignore */ }
-    }
+    // [FIX①] 直列→並列に変更。全フィードを同時に叩く
+    const results = await Promise.allSettled(RSS_FEEDS.map(feed => fetchFeedItems(feed)));
+    const items = results
+      .filter(r => r.status === 'fulfilled')
+      .flatMap(r => r.value);
 
     if (items.length === 0) {
-      try {
-        const cached = JSON.parse(localStorage.getItem(NEWS_CACHE_KEY) || 'null');
-        if (cached && cached.items.length) { renderNews(cached.items); return; }
-      } catch { /* ignore */ }
-      list.innerHTML = '<p class="news-loading">ニュースを取得できませんでした。しばらく後に「↻ 更新」を押してください。</p>';
+      const cached = _safeLSGet(NEWS_CACHE_KEY, null);
+      if (cached?.items?.length) { renderNews(cached.items); return; }
+      list.innerHTML = '<p class="news-loading">ニュースを取得できませんでした。「↻ 更新」を押してください。</p>';
       return;
     }
 
     items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
     const top = items.slice(0, 6);
-    try { localStorage.setItem(NEWS_CACHE_KEY, JSON.stringify({ ts: Date.now(), items: top })); } catch { /* ignore */ }
+    _safeLSSet(NEWS_CACHE_KEY, { ts: Date.now(), items: top });
     renderNews(top);
   }
 
@@ -1598,28 +763,38 @@
       a.href      = item.link;
       a.target    = '_blank';
       a.rel       = 'noopener';
-      a.innerHTML = `
-        <span class="news-title">${item.title}</span>
-        <div class="news-meta">
-          <span class="news-source">${item.source}</span>
-          <span class="news-time">${relativeTime(item.pubDate)}</span>
-        </div>
-        <button class="news-throw" title="作成ボードに投げ込む">→</button>
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className   = 'news-title';
+      titleSpan.textContent = item.title;
+
+      const metaDiv = document.createElement('div');
+      metaDiv.className = 'news-meta';
+      metaDiv.innerHTML = `
+        <span class="news-source">${item.source}</span>
+        <span class="news-time">${relativeTime(item.pubDate)}</span>
       `;
-      a.querySelector('.news-throw').addEventListener('click', e => {
+
+      const throwBtn = document.createElement('button');
+      throwBtn.className   = 'news-throw';
+      throwBtn.textContent = '→';
+      throwBtn.title       = '作成ボードに投げ込む';
+      throwBtn.addEventListener('click', e => {
         e.preventDefault();
         e.stopPropagation();
         throwToBoard(item.title);
       });
+
+      a.appendChild(titleSpan);
+      a.appendChild(metaDiv);
+      a.appendChild(throwBtn);
       list.appendChild(a);
     });
   }
 
   function onNewsSourceChange() {
-    try {
-      const cached = JSON.parse(localStorage.getItem(NEWS_CACHE_KEY) || 'null');
-      if (cached && cached.items.length) { renderNews(cached.items); return; }
-    } catch { /* ignore */ }
+    const cached = _safeLSGet(NEWS_CACHE_KEY, null);
+    if (cached?.items?.length) { renderNews(cached.items); return; }
     loadNews(true);
   }
 
@@ -1630,7 +805,6 @@
     const current = input.value.trimEnd();
     input.value   = current ? current + '\n' + text : text;
     input.scrollTop = input.scrollHeight;
-
     area.classList.remove('flash-append');
     void area.offsetWidth;
     area.classList.add('flash-append');
@@ -1652,7 +826,6 @@
       alert('このブラウザは音声入力に対応していません。\nChrome をお使いください。');
       return;
     }
-
     if (isRecording) { recognition && recognition.stop(); return; }
 
     recognition = new SpeechRecognition();
@@ -1668,13 +841,7 @@
     recognition.onstart  = () => { isRecording = true;  btn.classList.add('recording');    status.textContent = '🔴 録音中…'; };
     recognition.onresult = e  => { input.value = base ? base + ' ' + Array.from(e.results).map(r => r[0].transcript).join('') : Array.from(e.results).map(r => r[0].transcript).join(''); };
     recognition.onend    = () => { isRecording = false; btn.classList.remove('recording'); status.textContent = ''; };
-    recognition.onerror  = e  => {
-      isRecording = false;
-      btn.classList.remove('recording');
-      status.textContent = '';
-      if (e.error !== 'aborted') alert('音声入力エラー: ' + e.error);
-    };
-
+    recognition.onerror  = e  => { isRecording = false; btn.classList.remove('recording'); status.textContent = ''; if (e.error !== 'aborted') alert('音声入力エラー: ' + e.error); };
     recognition.start();
   }
 
@@ -1696,29 +863,46 @@
     document.getElementById('image-preview').src = '';
   }
 
-  // ── Generate ──
-  function handleGenerate() {
+  // ── [FIX③] Generate: クリップボードの堅牢化 + ボタン二重クリック防止 ──
+  async function handleGenerate() {
     const prompt  = document.getElementById('prompt-input').value.trim();
     const toolUrl = document.getElementById('tool-select').value;
     const btn     = document.getElementById('generate-btn');
     if (!prompt) { document.getElementById('prompt-input').focus(); return; }
+    if (btn.disabled) return;
 
-    navigator.clipboard.writeText(prompt).catch(() => {
-      const ta = document.createElement('textarea');
-      ta.value = prompt;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-    });
+    // クリップボードコピー（複数フォールバック）
+    let copied = false;
+    try {
+      await navigator.clipboard.writeText(prompt);
+      copied = true;
+    } catch {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = prompt;
+        ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        copied = document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch { copied = false; }
+    }
 
+    // ツールを新しいタブで開く
     window.open(toolUrl, '_blank', 'noopener');
-    btn.textContent = '✓ コピー済み';
+
+    btn.textContent = copied ? '✓ コピー済み' : '✓ 開きました';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '生成'; btn.classList.remove('copied'); }, 2000);
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = '生成';
+      btn.classList.remove('copied');
+      btn.disabled = false;
+    }, 2000);
   }
 
-  // ── Gallery ──
+  // ── [FIX④] Gallery: innerHTML+= を排除し、DOM を直接構築 ──
   async function buildGallery() {
     const creations = await loadCreations();
     const grid      = document.getElementById('gallery-grid');
@@ -1726,7 +910,10 @@
 
     grid.innerHTML = '';
     if (creations.length === 0) {
-      grid.innerHTML = '<div class="gallery-empty">＋ ボタンから<br>制作物を登録できます</div>';
+      const empty = document.createElement('div');
+      empty.className   = 'gallery-empty';
+      empty.textContent = '＋ ボタンから制作物を登録できます';
+      grid.appendChild(empty);
       return;
     }
 
@@ -1734,23 +921,46 @@
     recent.forEach(c => {
       const div = document.createElement('div');
       div.className = 'gallery-item';
-      div.innerHTML = c.imageUrl
-        ? `<img class="gallery-thumb" src="${c.imageUrl}" alt="${c.title}" loading="lazy"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-           <div class="gallery-thumb-placeholder" style="display:none">🎨</div>`
-        : `<div class="gallery-thumb-placeholder">🎨</div>`;
-      div.innerHTML += `
-        <div class="gallery-info">
-          <div class="gallery-title">${c.title}</div>
-          <div class="gallery-date">${c.date}</div>
-        </div>
-      `;
+
+      // サムネイル部分
+      if (c.imageUrl) {
+        const img = document.createElement('img');
+        img.className = 'gallery-thumb';
+        img.src       = c.imageUrl;
+        img.alt       = c.title;
+        img.loading   = 'lazy';
+        const placeholder = document.createElement('div');
+        placeholder.className   = 'gallery-thumb-placeholder';
+        placeholder.style.display = 'none';
+        placeholder.textContent = '🎨';
+        img.onerror = () => { img.style.display = 'none'; placeholder.style.display = 'flex'; };
+        div.appendChild(img);
+        div.appendChild(placeholder);
+      } else {
+        const placeholder = document.createElement('div');
+        placeholder.className   = 'gallery-thumb-placeholder';
+        placeholder.textContent = '🎨';
+        div.appendChild(placeholder);
+      }
+
+      // 情報部分
+      const info = document.createElement('div');
+      info.className = 'gallery-info';
+      const title = document.createElement('div');
+      title.className   = 'gallery-title';
+      title.textContent = c.title;
+      const date = document.createElement('div');
+      date.className   = 'gallery-date';
+      date.textContent = c.date;
+      info.appendChild(title);
+      info.appendChild(date);
+      div.appendChild(info);
+
       div.addEventListener('click', () => openDetailModal(c));
       grid.appendChild(div);
     });
   }
 
-  // Gallery detail modal
   let _detailCreation = null;
 
   function openDetailModal(c) {
@@ -1767,11 +977,10 @@
   }
 
   function useInBoard() {
-    if (_detailCreation && _detailCreation.prompt) throwToBoard(_detailCreation.prompt);
+    if (_detailCreation?.prompt) throwToBoard(_detailCreation.prompt);
     closeDetailModal();
   }
 
-  // Add modal
   function openAddModal() {
     const prompt = document.getElementById('prompt-input').value.trim();
     if (prompt) document.getElementById('form-prompt').value = prompt;
@@ -1806,28 +1015,56 @@
     closeAddModal();
   }
 
-  // All modal
   async function openAllModal() {
     const creations = (await loadCreations()).slice().reverse();
     const grid      = document.getElementById('all-grid');
     grid.innerHTML  = '';
 
     if (creations.length === 0) {
-      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-sub);padding:20px">まだ制作物がありません</div>';
+      const msg = document.createElement('div');
+      msg.style.cssText = 'grid-column:1/-1;text-align:center;color:var(--text-sub);padding:20px';
+      msg.textContent = 'まだ制作物がありません';
+      grid.appendChild(msg);
     } else {
       creations.forEach(c => {
         const div = document.createElement('div');
         div.className = 'all-item';
-        div.innerHTML = c.imageUrl
-          ? `<img class="gallery-thumb" src="${c.imageUrl}" alt="${c.title}" loading="lazy" onerror="this.style.display='none'" />`
-          : `<div class="gallery-thumb-placeholder">🎨</div>`;
-        div.innerHTML += `
-          <div class="gallery-info">
-            <div class="gallery-title" title="${c.prompt || ''}">${c.title}</div>
-            <div class="gallery-date">${c.tool} · ${c.date}</div>
-          </div>
-          <button class="all-item-delete" onclick="deleteCreation(${c.id}, event)" title="削除">✕</button>
-        `;
+
+        if (c.imageUrl) {
+          const img = document.createElement('img');
+          img.className = 'gallery-thumb';
+          img.src       = c.imageUrl;
+          img.alt       = c.title;
+          img.loading   = 'lazy';
+          img.onerror   = () => { img.style.display = 'none'; };
+          div.appendChild(img);
+        } else {
+          const ph = document.createElement('div');
+          ph.className   = 'gallery-thumb-placeholder';
+          ph.textContent = '🎨';
+          div.appendChild(ph);
+        }
+
+        const info = document.createElement('div');
+        info.className = 'gallery-info';
+        const titleEl = document.createElement('div');
+        titleEl.className   = 'gallery-title';
+        titleEl.title       = c.prompt || '';
+        titleEl.textContent = c.title;
+        const dateEl = document.createElement('div');
+        dateEl.className   = 'gallery-date';
+        dateEl.textContent = `${c.tool} · ${c.date}`;
+        info.appendChild(titleEl);
+        info.appendChild(dateEl);
+        div.appendChild(info);
+
+        const delBtn = document.createElement('button');
+        delBtn.className   = 'all-item-delete';
+        delBtn.textContent = '✕';
+        delBtn.title       = '削除';
+        delBtn.addEventListener('click', e => deleteCreation(c.id, e));
+        div.appendChild(delBtn);
+
         grid.appendChild(div);
       });
     }
@@ -1847,7 +1084,6 @@
     await openAllModal();
   }
 
-  // Close modals on overlay click
   document.querySelectorAll('.modal-overlay').forEach(overlay => {
     overlay.addEventListener('click', e => {
       if (e.target === overlay) overlay.classList.remove('open');
@@ -1873,27 +1109,32 @@
     days.forEach(({ date, isToday }) => {
       const cell = document.createElement('div');
       cell.className = `hg-cell hg-day-header${isToday ? ' today-col' : ''}`;
-      cell.innerHTML = `
-        <span class="hg-day-label">${isToday ? '今日' : DAY_LABELS[date.getDay()]}</span>
-        <span class="hg-date-num">${date.getMonth() + 1}/${date.getDate()}</span>
-      `;
+      const dayLabel = document.createElement('span');
+      dayLabel.className   = 'hg-day-label';
+      dayLabel.textContent = isToday ? '今日' : DAY_LABELS[date.getDay()];
+      const dateNum = document.createElement('span');
+      dateNum.className   = 'hg-date-num';
+      dateNum.textContent = `${date.getMonth() + 1}/${date.getDate()}`;
+      cell.appendChild(dayLabel);
+      cell.appendChild(dateNum);
       grid.appendChild(cell);
     });
 
     TASKS.forEach(task => {
       const labelCell = document.createElement('div');
-      labelCell.className  = 'hg-cell hg-task-label';
+      labelCell.className   = 'hg-cell hg-task-label';
       labelCell.textContent = task.label;
       grid.appendChild(labelCell);
 
       days.forEach(({ str, isToday }) => {
-        let donelist;
-        try { donelist = JSON.parse(localStorage.getItem(STORAGE_PREFIX + str) || '[]'); }
-        catch { donelist = []; }
+        const donelist = _memLSGet(STORAGE_PREFIX + str, []);
         const done = donelist.includes(task.label);
         const cell = document.createElement('div');
         cell.className = `hg-cell hg-check${done ? ' done' : ''}${isToday ? ' today-col' : ''}`;
-        cell.innerHTML = `<span class="hg-dot"></span><span class="hg-tick">✓</span>`;
+        const dot  = document.createElement('span'); dot.className = 'hg-dot';
+        const tick = document.createElement('span'); tick.className = 'hg-tick'; tick.textContent = '✓';
+        cell.appendChild(dot);
+        cell.appendChild(tick);
         grid.appendChild(cell);
       });
     });
@@ -1902,21 +1143,17 @@
   // ── Init ──
   async function init() {
     buildTaskList();
-    loadNews();
     buildHistoryGrid();
+    loadNews();
 
-    // 前回記憶したフォルダハンドルを復元（権限確認あり）
     try {
       const stored = await _getStoredHandle();
       if (stored) {
         const ok = await _verifyPermission(stored).catch(() => false);
-        if (ok) {
-          _folderHandle = stored;
-        } else {
-          await _clearHandle();
-        }
+        _folderHandle = ok ? stored : null;
+        if (!ok) await _clearHandle();
       }
-    } catch { /* フォルダ復元に失敗しても続行 */ }
+    } catch { /* フォルダ復元失敗は無視 */ }
 
     updateFolderUI();
     await buildGallery();
