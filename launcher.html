@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>AI の竈 — やることランチャー</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:       #0f1117;
+      --panel:    #181b24;
+      --panel2:   #1e2130;
+      --border:   rgba(255,255,255,0.07);
+      --text:     #e8eaf0;
+      --text-sub: #7a8099;
+      --accent:   #5b8af5;
+      --accent2:  #3ecf8e;
+      --danger:   #f56565;
+      --radius:   14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans JP', system-ui, sans-serif;
+      min-height: 100dvh;
+    }
+
+    /* ── ヘッダー ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+    .header-logo { font-size: 1.5rem; }
+    .header-title { font-size: 1rem; font-weight: 700; letter-spacing: 0.04em; }
+    .header-sub { font-size: 0.68rem; color: var(--text-sub); margin-top: 1px; }
+    .header-add {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(91,138,245,0.12);
+      color: var(--accent);
+      border: 1px solid rgba(91,138,245,0.25);
+      border-radius: 9px;
+      padding: 7px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .header-add:hover { background: rgba(91,138,245,0.22); border-color: rgba(91,138,245,0.45); }
+
+    /* ── コンテンツ ── */
+    .content {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 28px 24px 48px;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    /* ── カードグリッド ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    @media (max-width: 640px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .task-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 16px 14px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.18s, transform 0.12s, box-shadow 0.15s;
+      position: relative;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 108px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .task-card.ready:hover {
+      background: var(--panel2);
+      border-color: rgba(91,138,245,0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+    }
+    .task-card.ready:active { transform: scale(0.97); box-shadow: none; }
+    .task-card.wip { opacity: 0.5; cursor: default; }
+    .task-card.drag-over { border-color: var(--accent); background: rgba(91,138,245,0.08); }
+    .task-card.dragging { opacity: 0.35; }
+
+    .card-emoji { font-size: 1.7rem; line-height: 1; }
+    .card-title { font-size: 0.86rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+    .card-sub   { font-size: 0.66rem; color: var(--text-sub); }
+    .card-arrow {
+      margin-top: auto;
+      padding-top: 6px;
+      font-size: 0.7rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .card-wip-label {
+      margin-top: auto;
+      padding-top: 6px;
+      font-size: 0.64rem;
+      color: var(--text-sub);
+      letter-spacing: 0.08em;
+    }
+    .card-delete {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      font-size: 0.68rem;
+      cursor: pointer;
+      padding: 3px 5px;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s;
+      line-height: 1;
+    }
+    .task-card:hover .card-delete { opacity: 1; }
+    .card-delete:hover { color: var(--danger); }
+
+    /* ── ひらめきカード ── */
+    .inspire-wrap { margin-bottom: 36px; }
+    .inspire-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .inspire-refresh {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: var(--text-sub);
+      font-size: 0.72rem;
+      cursor: pointer;
+      padding: 4px 9px;
+      border-radius: 7px;
+      transition: background 0.15s, color 0.15s;
+      font-family: inherit;
+    }
+    .inspire-refresh:hover { background: var(--panel2); color: var(--text); }
+    .inspire-list { display: flex; flex-direction: column; gap: 8px; }
+    .inspire-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .inspire-card:hover { background: var(--panel2); border-color: rgba(62,207,142,0.28); }
+    .inspire-icon  { font-size: 1.15rem; flex-shrink: 0; }
+    .inspire-body  { flex: 1; min-width: 0; }
+    .inspire-text  { font-size: 0.8rem; color: var(--text); line-height: 1.45; }
+    .inspire-src   { font-size: 0.62rem; color: var(--text-sub); margin-top: 3px; }
+    .inspire-use-btn {
+      background: rgba(62,207,142,0.1);
+      border: none;
+      border-radius: 8px;
+      color: var(--accent2);
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .inspire-use-btn:hover { background: rgba(62,207,142,0.22); }
+
+    /* ── ストリーク ── */
+    .streak-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+    }
+    .streak-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .streak-count  { font-size: 0.8rem; font-weight: 600; color: var(--accent2); }
+    .streak-days   { display: flex; gap: 10px; flex-wrap: wrap; }
+    .streak-day    { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .streak-day-lbl { font-size: 0.58rem; color: var(--text-sub); letter-spacing: 0.06em; }
+    .streak-dot {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem;
+      transition: background 0.2s;
+    }
+    .streak-dot.done  { background: var(--accent2); border-color: var(--accent2); color: #0f1117; font-weight: 700; }
+    .streak-dot.today { border-color: var(--accent); }
+
+    /* ── モーダル共通 ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 26px;
+      width: 92%;
+      max-width: 420px;
+      max-height: 90dvh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .modal-header h3 { font-size: 0.95rem; font-weight: 600; }
+    .modal-close {
+      background: none; border: none;
+      color: var(--text-sub); cursor: pointer;
+      font-size: 1rem; padding: 4px 6px; border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .modal-close:hover { background: var(--panel2); color: var(--text); }
+
+    .form-group { margin-bottom: 18px; }
+    .form-label {
+      display: block;
+      font-size: 0.65rem; font-weight: 600;
+      color: var(--text-sub); letter-spacing: 0.13em;
+      text-transform: uppercase; margin-bottom: 7px;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.83rem;
+      padding: 10px 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-input:focus { border-color: var(--accent); }
+    .form-input::placeholder { color: var(--text-sub); }
+
+    .emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 4px;
+    }
+    .emoji-opt {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .emoji-opt:hover   { background: var(--panel2); }
+    .emoji-opt.picked  { background: rgba(91,138,245,0.22); }
+
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+    .btn-cancel {
+      background: var(--panel2); border: 1px solid var(--border);
+      border-radius: 9px; color: var(--text-sub);
+      cursor: pointer; font-family: inherit; font-size: 0.78rem;
+      padding: 9px 18px; transition: background 0.15s;
+    }
+    .btn-cancel:hover { background: rgba(255,255,255,0.06); }
+    .btn-save {
+      background: var(--accent); border: none;
+      border-radius: 9px; color: #fff;
+      cursor: pointer; font-family: inherit; font-size: 0.78rem;
+      font-weight: 600; padding: 9px 20px; transition: opacity 0.15s;
+    }
+    .btn-save:hover { opacity: 0.85; }
+
+    /* ── AIボードパネル（スライドイン） ── */
+    .board-panel {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+    .board-panel.open { transform: translateX(0); }
+
+    .board-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .board-back {
+      display: flex; align-items: center; gap: 6px;
+      background: none; border: none;
+      color: var(--text-sub); font-size: 0.8rem;
+      cursor: pointer; padding: 7px 11px; border-radius: 8px;
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s;
+    }
+    .board-back:hover { background: var(--panel2); color: var(--text); }
+    .board-panel-title { font-size: 0.95rem; font-weight: 600; }
+
+    .board-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+    .board-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .tool-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .tool-tab {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-sub);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.72rem;
+      padding: 6px 13px;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .tool-tab.active {
+      background: rgba(91,138,245,0.14);
+      border-color: rgba(91,138,245,0.4);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .tool-tab:hover:not(.active) { background: rgba(255,255,255,0.05); }
+
+    .prompt-box {
+      width: 100%;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.87rem;
+      line-height: 1.65;
+      padding: 14px 16px;
+      outline: none;
+      resize: vertical;
+      min-height: 140px;
+      transition: border-color 0.15s;
+    }
+    .prompt-box:focus { border-color: var(--accent); }
+    .prompt-box::placeholder { color: var(--text-sub); }
+
+    .board-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mini-gallery {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .mini-item {
+      cursor: pointer;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: border-color 0.15s, transform 0.12s;
+      flex-shrink: 0;
+    }
+    .mini-item:hover { border-color: var(--accent); transform: scale(1.04); }
+    .mini-item img { width: 68px; height: 68px; object-fit: cover; display: block; }
+    .mini-item-label {
+      font-size: 0.58rem; color: var(--text-sub);
+      padding: 3px 5px; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+      max-width: 68px; background: var(--panel);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<header class="header">
+  <span class="header-logo">🏯</span>
+  <div>
+    <div class="header-title">AI の竈</div>
+    <div class="header-sub">やることランチャー</div>
+  </div>
+  <button class="header-add" onclick="openAddModal()">＋ カードを追加</button>
+</header>
+
+<!-- メインコンテンツ -->
+<div class="content">
+
+  <!-- やることカード -->
+  <div class="section-label">やること</div>
+  <div class="card-grid" id="card-grid"></div>
+
+  <!-- ひらめきカード -->
+  <div class="inspire-wrap">
+    <div class="inspire-header">
+      <div class="section-label" style="margin-bottom:0">💡 ひらめきカード</div>
+      <button class="inspire-refresh" onclick="refreshInspire()">↻ 次のお題</button>
+    </div>
+    <div class="inspire-list" id="inspire-list">
+      <p style="font-size:0.75rem;color:var(--text-sub);padding:6px 0">読み込み中…</p>
+    </div>
+  </div>
+
+  <!-- ストリーク実績 -->
+  <div class="streak-box">
+    <div class="streak-header">
+      <div class="section-label" style="margin-bottom:0">📊 今週の実績</div>
+      <span style="font-size:1rem">🔥</span>
+      <span class="streak-count" id="streak-count"></span>
+    </div>
+    <div class="streak-days" id="streak-days"></div>
+  </div>
+
+</div>
+
+<!-- カード追加モーダル -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>カードを追加</h3>
+      <button class="modal-close" onclick="closeAddModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">絵文字を選ぶ</label>
+      <div class="emoji-grid" id="emoji-grid"></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">タイトル</label>
+      <input class="form-input" id="form-title" type="text" placeholder="例: AI画像を作る" maxlength="20" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">説明（任意）</label>
+      <input class="form-input" id="form-sub" type="text" placeholder="例: Midjourney / Firefly" maxlength="30" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">リンク先URL（未入力だと「準備中」）</label>
+      <input class="form-input" id="form-url" type="url" placeholder="https://..." />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeAddModal()">キャンセル</button>
+      <button class="btn-save" onclick="saveNewCard()">追加する</button>
+    </div>
+  </div>
+</div>
+
+<!-- AIボードパネル -->
+<div class="board-panel" id="board-panel">
+  <div class="board-header">
+    <button class="board-back" onclick="closeBoard()">← もどる</button>
+    <span class="board-panel-title" id="board-panel-title"></span>
+  </div>
+  <div class="board-body">
+    <div class="board-inner">
+
+      <!-- ツール選択タブ -->
+      <div class="tool-tabs" id="tool-tabs"></div>
+
+      <!-- プロンプト入力 -->
+      <textarea class="prompt-box" id="prompt-input"
+        placeholder="プロンプトを入力…&#10;（例：夜明けの海岸、波の泡、柔らかい光、写実的）"></textarea>
+
+      <div class="board-footer-row">
+        <button class="btn-cancel" onclick="clearPrompt()">クリア</button>
+        <button class="btn-save" onclick="handleGenerate()">→ 生成（新タブで開く）</button>
+      </div>
+
+      <!-- 過去の制作物（ミニギャラリー） -->
+      <div style="margin-top:32px">
+        <div class="section-label">過去の制作物（クリックでプロンプト再利用）</div>
+        <div class="mini-gallery" id="mini-gallery">
+          <p style="font-size:0.72rem;color:var(--text-sub)">まだ制作物がありません</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  定数 & デフォルトデータ
+// ═══════════════════════════════════════════════
+
+const CARDS_KEY      = 'launcher_cards_v1';
+const CREATIONS_KEY  = 'ai_creations';
+const STORAGE_PREFIX = 'routine_';
+
+const TOOLS = [
+  { label: 'Claude',    url: 'https://claude.ai'           },
+  { label: 'Gemini',    url: 'https://gemini.google.com'   },
+  { label: 'ChatGPT',   url: 'https://chatgpt.com'         },
+  { label: 'Firefly',   url: 'https://firefly.adobe.com'   },
+  { label: 'Midjourney',url: 'https://www.midjourney.com'  },
+  { label: 'Ideogram',  url: 'https://ideogram.ai'         },
+  { label: 'Suno',      url: 'https://suno.com'            },
+  { label: 'Cursor',    url: 'https://cursor.com'          },
+];
+
+const DEFAULT_CARDS = [
+  { id:'ai-image',   emoji:'🎨', title:'AI画像を作る',       sub:'Firefly / Midjourney', action:'board', ready:true  },
+  { id:'ai-chat',    emoji:'✨', title:'AIに相談する',        sub:'Claude / Gemini',      action:'url',   url:'https://claude.ai', ready:true },
+  { id:'exercise',   emoji:'💪', title:'筋トレ',             sub:'Google Fit',           action:'url',   url:'https://fit.google.com', ready:true },
+  { id:'reading',    emoji:'📖', title:'読書',               sub:'Kindle',               action:'url',   url:'https://read.amazon.co.jp', ready:true },
+  { id:'mercari',    emoji:'🛍️', title:'メルカリ出品チェック', sub:'メルカリ',            action:'url',   url:'https://jp.mercari.com', ready:true },
+  { id:'tasks',      emoji:'📋', title:'やること確認',        sub:'Google Tasks',         action:'url',   url:'https://tasks.google.com', ready:true },
+  { id:'music',      emoji:'🎵', title:'AI音楽を作る',        sub:'Suno',                 action:'url',   url:'https://suno.com', ready:true },
+  { id:'code',       emoji:'💻', title:'コードを書く',        sub:'Cursor',               action:'url',   url:'https://cursor.com', ready:true },
+  { id:'gemini',     emoji:'🌐', title:'Geminiで検索',        sub:'Google Gemini',        action:'url',   url:'https://gemini.google.com', ready:true },
+  { id:'castle',     emoji:'🏯', title:'城クイズを作る',      sub:'準備中',               action:'wip',   ready:false },
+  { id:'files',      emoji:'📁', title:'ファイル整理',        sub:'準備中',               action:'wip',   ready:false },
+  { id:'work',       emoji:'💼', title:'案件管理',            sub:'準備中',               action:'wip',   ready:false },
+];
+
+const INSPIRE_POOL = [
+  { icon:'🌅', text:'江戸時代の城下町、夜の市場、提灯の光、水彩画風',        src:'AI画像プロンプト' },
+  { icon:'🌊', text:'夜明けの海岸、波の泡、柔らかい光、写実的',              src:'AI画像プロンプト' },
+  { icon:'🏯', text:'霧に包まれた山城、桜、春の朝、浮世絵テイスト',          src:'AI画像プロンプト' },
+  { icon:'🌙', text:'月明かりの竹林、静寂、青みがかった夜、ミニマル',        src:'AI画像プロンプト' },
+  { icon:'🎨', text:'ミニマルなロゴ、和のテイスト、ネイビーと金色',          src:'AI画像プロンプト' },
+  { icon:'🌸', text:'春の京都、石畳の小路、散る桜、柔らかい朝の光',          src:'AI画像プロンプト' },
+  { icon:'⛩️', text:'夕暮れの神社、赤い鳥居、松明の炎、幻想的',              src:'AI画像プロンプト' },
+  { icon:'🎵', text:'和の旋律と現代ビートを融合させたlofi曲、90秒',          src:'AI音楽プロンプト' },
+  { icon:'🎸', text:'夏祭りをイメージしたアップテンポなJ-POP、明るく',       src:'AI音楽プロンプト' },
+  { icon:'✍️', text:'今日のやったことを3行で振り返る日記を書いて',          src:'AIテキストプロンプト' },
+  { icon:'🤖', text:'副業アイデアを5つ、具体的なステップ付きで提案して',     src:'AIテキストプロンプト' },
+  { icon:'💡', text:'毎朝5分でできる、集中力を高めるルーティンを提案して',   src:'AIテキストプロンプト' },
+];
+
+const EMOJI_LIST = [
+  '🎨','✨','💪','📖','🛍️','📋','🏯','📁',
+  '💼','🎵','💻','🌐','🌅','🌊','🔥','⚡',
+  '🎯','📊','🧹','🌿','☕','🎮','🏃','📝',
+  '🔧','🌸','⛩️','💡','🤖','🗓️','📷','🎤',
+];
+
+// ═══════════════════════════════════════════════
+//  カードデータ管理
+// ═══════════════════════════════════════════════
+
+function loadCards() {
+  try {
+    const s = localStorage.getItem(CARDS_KEY);
+    return s ? JSON.parse(s) : DEFAULT_CARDS;
+  } catch { return DEFAULT_CARDS; }
+}
+
+function saveCards(cards) {
+  try { localStorage.setItem(CARDS_KEY, JSON.stringify(cards)); } catch {}
+}
+
+// ═══════════════════════════════════════════════
+//  カードグリッドレンダリング
+// ═══════════════════════════════════════════════
+
+let _dragSrc = null;
+
+function renderCards() {
+  const cards = loadCards();
+  const grid  = document.getElementById('card-grid');
+  grid.innerHTML = '';
+
+  cards.forEach(card => {
+    const el = document.createElement('div');
+    el.className   = `task-card ${card.ready ? 'ready' : 'wip'}`;
+    el.draggable   = card.ready;
+    el.dataset.cid = card.id;
+
+    el.innerHTML = `
+      <span class="card-emoji">${card.emoji}</span>
+      <div class="card-title">${escHtml(card.title)}</div>
+      ${card.sub ? `<div class="card-sub">${escHtml(card.sub)}</div>` : ''}
+      ${card.ready
+        ? `<div class="card-arrow">→ 開く</div>`
+        : `<div class="card-wip-label">準備中</div>`}
+      ${isCustomCard(card.id)
+        ? `<button class="card-delete" title="削除" onclick="deleteCard('${card.id}',event)">✕</button>`
+        : ''}
+    `;
+
+    // クリックアクション
+    if (card.ready) {
+      el.addEventListener('click', e => {
+        if (e.target.classList.contains('card-delete')) return;
+        if (card.action === 'board') {
+          openBoard(card);
+        } else if (card.action === 'url' && card.url) {
+          window.open(card.url, '_blank', 'noopener');
+        }
+      });
+    }
+
+    // ドラッグ並び替え
+    el.addEventListener('dragstart', e => {
+      _dragSrc = card.id;
+      setTimeout(() => el.classList.add('dragging'), 0);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+      grid.querySelectorAll('.task-card').forEach(c => c.classList.remove('drag-over'));
+    });
+    el.addEventListener('dragover', e => {
+      e.preventDefault();
+      if (_dragSrc !== card.id) el.classList.add('drag-over');
+    });
+    el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+    el.addEventListener('drop', e => {
+      e.preventDefault();
+      el.classList.remove('drag-over');
+      if (_dragSrc && _dragSrc !== card.id) {
+        const all  = loadCards();
+        const from = all.findIndex(c => c.id === _dragSrc);
+        const to   = all.findIndex(c => c.id === card.id);
+        if (from >= 0 && to >= 0) {
+          const [moved] = all.splice(from, 1);
+          all.splice(to, 0, moved);
+          saveCards(all);
+          renderCards();
+        }
+      }
+    });
+
+    grid.appendChild(el);
+  });
+}
+
+function isCustomCard(id) {
+  return !DEFAULT_CARDS.some(d => d.id === id);
+}
+
+function deleteCard(id, e) {
+  e.stopPropagation();
+  if (!confirm('このカードを削除しますか？')) return;
+  saveCards(loadCards().filter(c => c.id !== id));
+  renderCards();
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ═══════════════════════════════════════════════
+//  カード追加モーダル
+// ═══════════════════════════════════════════════
+
+let _pickedEmoji = '🎯';
+
+function openAddModal() {
+  _pickedEmoji = '🎯';
+  const grid = document.getElementById('emoji-grid');
+  grid.innerHTML = '';
+  EMOJI_LIST.forEach(e => {
+    const span = document.createElement('span');
+    span.className = `emoji-opt ${e === _pickedEmoji ? 'picked' : ''}`;
+    span.textContent = e;
+    span.onclick = () => {
+      _pickedEmoji = e;
+      grid.querySelectorAll('.emoji-opt').forEach(el => el.classList.toggle('picked', el.textContent === e));
+    };
+    grid.appendChild(span);
+  });
+  document.getElementById('form-title').value = '';
+  document.getElementById('form-sub').value   = '';
+  document.getElementById('form-url').value   = '';
+  document.getElementById('add-modal').classList.add('open');
+  setTimeout(() => document.getElementById('form-title').focus(), 50);
+}
+
+function closeAddModal() {
+  document.getElementById('add-modal').classList.remove('open');
+}
+
+function saveNewCard() {
+  const title = document.getElementById('form-title').value.trim();
+  if (!title) { document.getElementById('form-title').focus(); return; }
+  const url  = document.getElementById('form-url').value.trim();
+  const sub  = document.getElementById('form-sub').value.trim();
+  const card = {
+    id:     'custom_' + Date.now(),
+    emoji:  _pickedEmoji,
+    title,
+    sub,
+    action: url ? 'url' : 'wip',
+    url:    url || '',
+    ready:  !!url,
+  };
+  const cards = loadCards();
+  // WIPカードの直前に挿入（ready=falseの列の前）
+  const wipIdx = cards.findIndex(c => !c.ready);
+  if (wipIdx >= 0) cards.splice(wipIdx, 0, card);
+  else cards.push(card);
+  saveCards(cards);
+  renderCards();
+  closeAddModal();
+}
+
+// ═══════════════════════════════════════════════
+//  AIボードパネル
+// ═══════════════════════════════════════════════
+
+let _activeTool = TOOLS[0];
+
+function buildToolTabs() {
+  const wrap = document.getElementById('tool-tabs');
+  wrap.innerHTML = '';
+  TOOLS.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className   = `tool-tab ${t.url === _activeTool.url ? 'active' : ''}`;
+    btn.textContent = t.label;
+    btn.onclick     = () => {
+      _activeTool = t;
+      wrap.querySelectorAll('.tool-tab').forEach(b => b.classList.toggle('active', b.textContent === t.label));
+    };
+    wrap.appendChild(btn);
+  });
+}
+
+function openBoard(card) {
+  document.getElementById('board-panel-title').textContent = `${card.emoji} ${card.title}`;
+  document.getElementById('board-panel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  buildToolTabs();
+  buildMiniGallery();
+}
+
+function closeBoard() {
+  document.getElementById('board-panel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function clearPrompt() {
+  document.getElementById('prompt-input').value = '';
+  document.getElementById('prompt-input').focus();
+}
+
+function handleGenerate() {
+  const prompt = document.getElementById('prompt-input').value.trim();
+  if (!prompt) {
+    document.getElementById('prompt-input').focus();
+    return;
+  }
+  // プロンプトをクリップボードにコピーしてツールを開く
+  navigator.clipboard.writeText(prompt).catch(() => {});
+  window.open(_activeTool.url, '_blank', 'noopener');
+}
+
+function buildMiniGallery() {
+  const gallery = document.getElementById('mini-gallery');
+  gallery.innerHTML = '';
+  try {
+    const all = JSON.parse(localStorage.getItem(CREATIONS_KEY) || '[]');
+    if (all.length === 0) {
+      gallery.innerHTML = '<p style="font-size:0.72rem;color:var(--text-sub)">まだ制作物がありません</p>';
+      return;
+    }
+    all.slice().reverse().slice(0, 10).forEach(c => {
+      if (!c.imageUrl && !c.prompt) return;
+      const item = document.createElement('div');
+      item.className = 'mini-item';
+      item.title     = c.prompt || c.title || '';
+      item.onclick   = () => {
+        if (c.prompt) {
+          document.getElementById('prompt-input').value = c.prompt;
+          document.getElementById('prompt-input').focus();
+        }
+      };
+      if (c.imageUrl) {
+        const img = document.createElement('img');
+        img.src      = c.imageUrl;
+        img.onerror  = () => img.remove();
+        item.appendChild(img);
+      }
+      const lbl = document.createElement('div');
+      lbl.className   = 'mini-item-label';
+      lbl.textContent = c.title || '';
+      item.appendChild(lbl);
+      gallery.appendChild(item);
+    });
+    if (!gallery.hasChildNodes()) {
+      gallery.innerHTML = '<p style="font-size:0.72rem;color:var(--text-sub)">まだ制作物がありません</p>';
+    }
+  } catch { gallery.innerHTML = '<p style="font-size:0.72rem;color:var(--text-sub)">読み込みエラー</p>'; }
+}
+
+// ═══════════════════════════════════════════════
+//  ひらめきカード
+// ═══════════════════════════════════════════════
+
+let _shownInspire = [];
+
+function refreshInspire() {
+  const pool = INSPIRE_POOL.filter(p => !_shownInspire.includes(p.text));
+  const src  = pool.length >= 2 ? pool : INSPIRE_POOL;
+  const picks = [...src].sort(() => Math.random() - 0.5).slice(0, 2);
+  _shownInspire = [..._shownInspire, ...picks.map(p => p.text)];
+  if (_shownInspire.length > INSPIRE_POOL.length) _shownInspire = picks.map(p => p.text);
+
+  const list = document.getElementById('inspire-list');
+  list.innerHTML = '';
+  picks.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'inspire-card';
+    div.innerHTML = `
+      <span class="inspire-icon">${p.icon}</span>
+      <div class="inspire-body">
+        <div class="inspire-text">${escHtml(p.text)}</div>
+        <div class="inspire-src">${p.src}</div>
+      </div>
+      <button class="inspire-use-btn">→ 使う</button>
+    `;
+    div.querySelector('.inspire-use-btn').onclick = e => {
+      e.stopPropagation();
+      document.getElementById('prompt-input').value = p.text;
+      openBoard({ emoji: '🎨', title: 'AI作成ボード', action: 'board' });
+    };
+    div.onclick = () => {
+      document.getElementById('prompt-input').value = p.text;
+      openBoard({ emoji: '🎨', title: 'AI作成ボード', action: 'board' });
+    };
+    list.appendChild(div);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  ストリーク実績
+// ═══════════════════════════════════════════════
+
+function renderStreak() {
+  const daysEl  = document.getElementById('streak-days');
+  const countEl = document.getElementById('streak-count');
+  daysEl.innerHTML = '';
+
+  const today = new Date();
+  const days  = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const yy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const key = `${yy}-${mm}-${dd}`;
+    let done = false;
+    try {
+      const arr = JSON.parse(localStorage.getItem(STORAGE_PREFIX + key) || '[]');
+      done = arr.length > 0;
+    } catch {}
+    const dayOfWeek = ['日','月','火','水','木','金','土'][d.getDay()];
+    days.push({ label: dayOfWeek, done, isToday: i === 0 });
+  }
+
+  // 今日から遡る連続日数
+  let streak = 0;
+  for (let i = days.length - 1; i >= 0; i--) {
+    if (days[i].done) streak++;
+    else break;
+  }
+
+  days.forEach(({ label, done, isToday }) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'streak-day';
+    wrap.innerHTML = `
+      <span class="streak-day-lbl">${label}</span>
+      <div class="streak-dot ${done ? 'done' : ''} ${isToday ? 'today' : ''}">
+        ${done ? '✓' : ''}
+      </div>
+    `;
+    daysEl.appendChild(wrap);
+  });
+
+  countEl.textContent = streak > 0 ? `${streak}日連続` : '今日もがんばろう！';
+}
+
+// ═══════════════════════════════════════════════
+//  モーダル外クリックで閉じる
+// ═══════════════════════════════════════════════
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// Escキーでボードを閉じる
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (document.getElementById('board-panel').classList.contains('open')) closeBoard();
+    else document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// ═══════════════════════════════════════════════
+//  初期化
+// ═══════════════════════════════════════════════
+
+renderCards();
+refreshInspire();
+renderStreak();
+</script>
+</body>
+</html>

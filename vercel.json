@@ -1,0 +1,9 @@
+{
+  "outputDirectory": ".",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    { "src": "/launcher", "dest": "/launcher.html" },
+    { "src": "/",         "dest": "/index.html"    }
+  ]
+}
