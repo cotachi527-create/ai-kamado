@@ -69,7 +69,7 @@
 
     .main { display: flex; flex-direction: column; overflow-y: auto; }
 
-    .news-section { padding: 24px 24px 0; flex-shrink: 0; max-height: 260px; display: flex; flex-direction: column; }
+    .news-section { padding: 24px 24px 0; flex-shrink: 0; }
     .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
     .section-header h2 { font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; color: var(--text); }
     .badge { font-size: 0.62rem; font-weight: 600; padding: 2px 8px; border-radius: 20px; background: rgba(91, 138, 245, 0.18); color: var(--accent); letter-spacing: 0.04em; }
@@ -77,8 +77,8 @@
     .news-refresh:hover { background: var(--panel2); color: var(--text); }
     .news-source-select { background: var(--panel); border: 1px solid var(--border); color: var(--text-sub); font-size: 0.72rem; padding: 4px 22px 4px 8px; border-radius: 6px; font-family: inherit; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%237a8099' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 6px center; transition: border-color 0.15s, color 0.15s; }
     .news-source-select:focus { outline: none; border-color: var(--accent); color: var(--text); }
-    .news-list { display: flex; flex-direction: column; gap: 0; overflow-y: auto; flex: 1; padding-bottom: 8px; }
-    .news-item { display: flex; align-items: center; gap: 12px; padding: 5px 12px; border-radius: 10px; text-decoration: none; transition: background 0.15s; }
+    .news-list { display: flex; flex-direction: column; gap: 2px; }
+    .news-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; text-decoration: none; transition: background 0.15s; }
     .news-item:hover { background: var(--panel2); }
     .news-title { flex: 1; font-size: 0.78rem; color: var(--text); line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
     .news-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; }
@@ -164,27 +164,6 @@
     .gallery-empty { grid-column: 1 / -1; text-align: center; font-size: 0.75rem; color: var(--text-sub); padding: 24px 0; line-height: 1.8; }
     .show-all-btn { width: 100%; background: var(--panel); border: 1px solid var(--border); color: var(--text-sub); font-size: 0.75rem; padding: 10px; border-radius: 10px; cursor: pointer; font-family: inherit; transition: background 0.15s, color 0.15s; margin-top: auto; }
     .show-all-btn:hover { background: var(--panel2); color: var(--text); }
-
-    /* ── ギャラリーカードのコピーボタン ── */
-    .gallery-item { position: relative; }
-    .gallery-copy-btn {
-      position: absolute;
-      bottom: 36px; right: 6px;
-      background: rgba(0,0,0,0.65);
-      border: none;
-      color: var(--text-sub);
-      font-size: 0.62rem;
-      padding: 3px 7px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-family: inherit;
-      opacity: 0;
-      transition: opacity 0.15s, color 0.15s, background 0.15s;
-      white-space: nowrap;
-    }
-    .gallery-item:hover .gallery-copy-btn { opacity: 1; }
-    .gallery-copy-btn:hover { background: rgba(62,207,142,0.25); color: var(--accent2); }
-    .gallery-copy-btn.copied { color: var(--accent2); }
 
     .folder-bar { display: flex; align-items: center; gap: 6px; }
     .folder-status { font-size: 0.68rem; color: var(--text-sub); flex: 1; min-width: 0; }
@@ -292,7 +271,6 @@
 
       <div class="board-controls">
         <select class="tool-select" id="tool-select">
-          <option value="https://claude.ai">Claude</option>
           <option value="https://gemini.google.com">Gemini</option>
           <option value="https://chatgpt.com">ChatGPT</option>
           <option value="https://cursor.com">Cursor</option>
@@ -372,15 +350,8 @@
       <input class="form-input" id="form-title" type="text" placeholder="夜明けの海" />
     </div>
     <div class="form-group">
-      <label class="form-label">画像（URLまたはファイルを選択）</label>
-      <input class="form-input" id="form-url" type="url" placeholder="https://... （URLで指定する場合）" />
-      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-top:4px;">
-        <span style="font-size:0.72rem;color:var(--text-sub);">または</span>
-        <span class="btn-cancel" style="padding:6px 12px;font-size:0.72rem;cursor:pointer;" onclick="document.getElementById('form-image-file').click()">📁 ファイルを選択</span>
-        <span id="form-image-name" style="font-size:0.68rem;color:var(--accent2);"></span>
-        <input type="file" id="form-image-file" accept="image/*" style="display:none" onchange="handleFormImageFile(event)" />
-      </label>
-      <img id="form-image-preview" style="display:none;width:100%;max-height:120px;object-fit:contain;border-radius:8px;margin-top:6px;background:var(--panel2);" />
+      <label class="form-label">画像URL（生成後のURLを貼り付け）</label>
+      <input class="form-input" id="form-url" type="url" placeholder="https://..." />
     </div>
     <div class="form-group">
       <label class="form-label">使用したプロンプト</label>
@@ -389,7 +360,6 @@
     <div class="form-group">
       <label class="form-label">ツール</label>
       <select class="form-select" id="form-tool">
-        <option>Claude</option>
         <option>Gemini</option>
         <option>ChatGPT</option>
         <option>Cursor</option>
@@ -433,106 +403,61 @@
 
   const STORAGE_PREFIX = 'routine_';
   const CREATIONS_KEY  = 'ai_creations';
-  const GAS_API_URL    = 'https://script.google.com/macros/s/AKfycbz9sZ5I8GYcr30hKr_JTwyoH_S7DqyHd7rpnEvr1zLZbaS6OkV2GBfBBaC5bmcifuD7/exec';
-  const GAS_CACHE_KEY  = 'gas_routine_cache';
-  const GAS_CACHE_TTL  = 10 * 60 * 1000; // 10分キャッシュ
 
-  // GASからタスク実績を取得してlocalStorageに反映
-  async function syncFromGAS() {
-    try {
-      // キャッシュ確認
-      const cached = _safeLSGet(GAS_CACHE_KEY, null);
-      if (cached && Date.now() - cached.ts < GAS_CACHE_TTL) return;
-
-      const res = await fetch(GAS_API_URL, { signal: AbortSignal.timeout(10000) });
-      if (!res.ok) return;
-      const records = await res.json();
-
-      // 日付ごとにタスクをグループ化してlocalStorageに保存
-      const byDate = {};
-      records.forEach(r => {
-        if (!r.date || !r.task || !r.done) return;
-        if (!byDate[r.date]) byDate[r.date] = [];
-        if (!byDate[r.date].includes(r.task)) byDate[r.date].push(r.task);
-      });
-
-      Object.entries(byDate).forEach(([date, tasks]) => {
-        const key = STORAGE_PREFIX + date;
-        // 既存データとマージ（上書きしない）
-        const existing = _memLSGet(key, []);
-        const merged   = [...new Set([...existing, ...tasks])];
-        _memLSSet(key, merged);
-      });
-
-      _safeLSSet(GAS_CACHE_KEY, { ts: Date.now() });
-    } catch (e) {
-      console.warn('GAS同期失敗:', e.message);
-    }
-  }
-
-  // ── RSS: 複数プロキシでフォールバック ──
+  // ── [FIX①] RSS: 複数プロキシを用意してフォールバック ──
   const RSS_FEEDS = [
-    { url: 'https://gigazine.net/news/rss_2.0/',                    name: 'ギガジン'     },
-    { url: 'https://rss.itmedia.co.jp/rss/2.0/aiplus.xml',          name: 'ITmedia AI+' },
-    { url: 'https://wired.jp/rss/',                                  name: 'WIRED.jp'    },
-    { url: 'https://zenn.dev/topics/prompt/feed',                    name: 'Zenn Prompt' },
+    { url: 'https://gigazine.net/news/rss_2.0/',           name: 'ギガジン'     },
+    { url: 'https://rss.itmedia.co.jp/rss/2.0/aiplus.xml', name: 'ITmedia AI+' },
+    { url: 'https://wired.jp/rss/',                        name: 'WIRED.jp'    },
+    { url: 'https://zenn.dev/topics/prompt/feed',          name: 'Zenn Prompt' },
   ];
 
-  const NEWS_CACHE_KEY = 'ai_news_cache_v6';
+  // 複数のCORSプロキシを順番に試す
+  const CORS_PROXIES = [
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  ];
+
+  const NEWS_CACHE_KEY = 'ai_news_cache_v3';
   const NEWS_CACHE_TTL = 30 * 60 * 1000;
 
-  // Inoreader の公開API（認証不要・CORS対応・安定）をメインに
-  // allorigins をフォールバックとして使用
-  async function fetchFeedItems(feed) {
-    // CORSプロキシを複数試す（JSONP対応のものを優先）
-    const proxies = [
-      { url: `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=4`, type: 'rss2json' },
-      { url: `https://feedparser.vercel.app/api?url=${encodeURIComponent(feed.url)}`,               type: 'raw' },
-      { url: `https://thingproxy.freeboard.io/fetch/${feed.url}`,                                   type: 'raw' },
-    ];
-
-    for (const proxy of proxies) {
+  // [FIX①] プロキシを順番に試してフェッチ
+  async function fetchWithFallback(url) {
+    for (const proxyFn of CORS_PROXIES) {
       try {
-        const res = await fetch(proxy.url, { signal: AbortSignal.timeout(12000) });
-        if (!res.ok) continue;
-
-        if (proxy.type === 'rss2json') {
-          const data = await res.json();
-          if (data.status !== 'ok' || !data.items?.length) continue;
-          return data.items.slice(0, 4).map(item => ({
-            title:   item.title?.trim() || '',
-            link:    item.link || item.guid || '',
-            pubDate: item.pubDate || '',
-            source:  feed.name,
-          })).filter(i => i.title && i.link);
-        }
-
-        const text = await res.text();
-        if (!text) continue;
-        const doc = new DOMParser().parseFromString(text, 'application/xml');
-        if (doc.querySelector('parsererror')) continue;
-
-        const rssItems = [...doc.querySelectorAll('item')];
-        if (rssItems.length) {
-          return rssItems.slice(0, 4).map(el => ({
-            title:   el.querySelector('title')?.textContent?.trim() || '',
-            link:    el.querySelector('link')?.textContent?.trim()  || '',
-            pubDate: el.querySelector('pubDate')?.textContent || el.querySelector('dc\:date')?.textContent || '',
-            source:  feed.name,
-          })).filter(i => i.title && i.link);
-        }
-        const atomItems = [...doc.querySelectorAll('entry')];
-        if (atomItems.length) {
-          return atomItems.slice(0, 4).map(el => ({
-            title:   el.querySelector('title')?.textContent?.trim() || '',
-            link:    el.querySelector('link')?.getAttribute('href') || el.querySelector('link')?.textContent?.trim() || '',
-            pubDate: el.querySelector('updated')?.textContent || el.querySelector('published')?.textContent || '',
-            source:  feed.name,
-          })).filter(i => i.title && i.link);
-        }
-      } catch { /* 次を試す */ }
+        const res = await fetch(proxyFn(url), { signal: AbortSignal.timeout(8000) });
+        if (res.ok) return res;
+      } catch { /* 次のプロキシを試す */ }
     }
-    return [];
+    return null;
+  }
+
+  async function fetchFeedItems(feed) {
+    const res = await fetchWithFallback(feed.url);
+    if (!res) return [];
+    let text;
+    try { text = await res.text(); } catch { return []; }
+
+    const doc = new DOMParser().parseFromString(text, 'application/xml');
+
+    const rssItems = [...doc.querySelectorAll('item')];
+    if (rssItems.length) {
+      return rssItems.slice(0, 4).map(el => ({
+        title:   el.querySelector('title')?.textContent?.trim() || '',
+        link:    el.querySelector('link')?.textContent?.trim()  || '',
+        pubDate: el.querySelector('pubDate')?.textContent || el.querySelector('dc\\:date')?.textContent || '',
+        source:  feed.name,
+      })).filter(i => i.title && i.link);
+    }
+
+    const atomItems = [...doc.querySelectorAll('entry')];
+    return atomItems.slice(0, 4).map(el => ({
+      title:   el.querySelector('title')?.textContent?.trim() || '',
+      link:    el.querySelector('link')?.getAttribute('href') || el.querySelector('link')?.textContent?.trim() || '',
+      pubDate: el.querySelector('updated')?.textContent || el.querySelector('published')?.textContent || '',
+      source:  feed.name,
+    })).filter(i => i.title && i.link);
   }
 
   // ── Helpers ──
@@ -656,8 +581,6 @@
   }
 
   function _fileName(creation) { return `${creation.date}_${creation.id}.json`; }
-  function _fileBaseName(creation) { return `${creation.date}_${creation.id}`; }
-  const IMAGE_EXTS = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
 
   async function _writeCreationFile(dirHandle, creation) {
     const fh = await dirHandle.getFileHandle(_fileName(creation), { create: true });
@@ -668,54 +591,16 @@
 
   async function _deleteCreationFile(dirHandle, creation) {
     try { await dirHandle.removeEntry(_fileName(creation)); } catch { /* ignore */ }
-    for (const ext of IMAGE_EXTS) {
-      try { await dirHandle.removeEntry(`${_fileBaseName(creation)}.${ext}`); } catch { /* ignore */ }
-    }
-  }
-
-  function _fileToDataURL(file) {
-    return new Promise((resolve, reject) => {
-      const r = new FileReader();
-      r.onload  = () => resolve(r.result);
-      r.onerror = () => reject(r.error);
-      r.readAsDataURL(file);
-    });
   }
 
   async function _readAllFromFolder(dirHandle) {
     const creations = [];
-    const fileIndex = {};
     for await (const [name, handle] of dirHandle.entries()) {
-      if (handle.kind === 'file') fileIndex[name] = handle;
-    }
-    for (const [name, handle] of Object.entries(fileIndex)) {
-      if (!name.endsWith('.json')) continue;
+      if (handle.kind !== 'file' || !name.endsWith('.json')) continue;
       try {
         const file = await handle.getFile();
         const c    = JSON.parse(await file.text());
-        if (!c || !c.id) continue;
-        // 1) 同名ファイル（日付_ID.ext）を探す
-        const baseName = name.replace('.json', '');
-        let foundImg = false;
-        for (const ext of IMAGE_EXTS) {
-          const imgName = `${baseName}.${ext}`;
-          if (fileIndex[imgName]) {
-            try {
-              const imgFile = await fileIndex[imgName].getFile();
-              c.localImageUrl = await _fileToDataURL(imgFile);
-              foundImg = true;
-            } catch { /* ignore */ }
-            break;
-          }
-        }
-        // 2) imageFileName フィールドで元ファイル名（day001.png等）を探す
-        if (!foundImg && c.imageFileName && fileIndex[c.imageFileName]) {
-          try {
-            const imgFile = await fileIndex[c.imageFileName].getFile();
-            c.localImageUrl = await _fileToDataURL(imgFile);
-          } catch { /* ignore */ }
-        }
-        creations.push(c);
+        if (c && c.id) creations.push(c);
       } catch { /* skip */ }
     }
     return creations.sort((a, b) => a.id - b.id);
@@ -842,27 +727,23 @@
 
     list.innerHTML = '<p class="news-loading">読み込み中…</p>';
 
-    try {
-      // GAS経由でニュースを取得（CORSなし・安定）
-      const res = await fetch('https://script.google.com/macros/s/AKfycbz9sZ5I8GYcr30hKr_JTwyoH_S7DqyHd7rpnEvr1zLZbaS6OkV2GBfBBaC5bmcifuD7/exec?type=news', { signal: AbortSignal.timeout(15000) });
-      if (!res.ok) throw new Error('GAS error');
-      const items = await res.json();
+    // [FIX①] 直列→並列に変更。全フィードを同時に叩く
+    const results = await Promise.allSettled(RSS_FEEDS.map(feed => fetchFeedItems(feed)));
+    const items = results
+      .filter(r => r.status === 'fulfilled')
+      .flatMap(r => r.value);
 
-      if (!items.length) throw new Error('empty');
-
-      // ソース名を日本語に変換
-      const nameMap = { 'Gigazine': 'ギガジン', 'ITmedia': 'ITmedia AI+', 'WIRED': 'WIRED.jp', 'Zenn': 'Zenn Prompt' };
-      items.forEach(i => { if (nameMap[i.source]) i.source = nameMap[i.source]; });
-
-      items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
-      const top = items.slice(0, 8);
-      _safeLSSet(NEWS_CACHE_KEY, { ts: Date.now(), items: top });
-      renderNews(top);
-    } catch(e) {
+    if (items.length === 0) {
       const cached = _safeLSGet(NEWS_CACHE_KEY, null);
       if (cached?.items?.length) { renderNews(cached.items); return; }
       list.innerHTML = '<p class="news-loading">ニュースを取得できませんでした。「↻ 更新」を押してください。</p>';
+      return;
     }
+
+    items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+    const top = items.slice(0, 6);
+    _safeLSSet(NEWS_CACHE_KEY, { ts: Date.now(), items: top });
+    renderNews(top);
   }
 
   function renderNews(top) {
@@ -1042,11 +923,10 @@
       div.className = 'gallery-item';
 
       // サムネイル部分
-      const thumbSrc = c.localImageUrl || c.imageUrl;
-      if (thumbSrc) {
+      if (c.imageUrl) {
         const img = document.createElement('img');
         img.className = 'gallery-thumb';
-        img.src       = thumbSrc;
+        img.src       = c.imageUrl;
         img.alt       = c.title;
         img.loading   = 'lazy';
         const placeholder = document.createElement('div');
@@ -1077,32 +957,6 @@
       div.appendChild(info);
 
       div.addEventListener('click', () => openDetailModal(c));
-
-      // コピーボタン（プロンプトがある場合のみ）
-      if (c.prompt) {
-        const copyBtn = document.createElement('button');
-        copyBtn.className   = 'gallery-copy-btn';
-        copyBtn.textContent = '📋 コピー';
-        copyBtn.title       = 'プロンプトをコピー';
-        copyBtn.addEventListener('click', async e => {
-          e.stopPropagation();
-          try { await navigator.clipboard.writeText(c.prompt); }
-          catch {
-            const ta = document.createElement('textarea');
-            ta.value = c.prompt;
-            ta.style.cssText = 'position:fixed;opacity:0';
-            document.body.appendChild(ta);
-            ta.select();
-            document.execCommand('copy');
-            document.body.removeChild(ta);
-          }
-          copyBtn.textContent = '✓ コピー済み';
-          copyBtn.classList.add('copied');
-          setTimeout(() => { copyBtn.textContent = '📋 コピー'; copyBtn.classList.remove('copied'); }, 1500);
-        });
-        div.appendChild(copyBtn);
-      }
-
       grid.appendChild(div);
     });
   }
@@ -1127,28 +981,7 @@
     closeDetailModal();
   }
 
-  // フォームの画像ファイル選択
-  let _formImageDataUrl = null;
-  let _formImageFile    = null;  // 元ファイルを保持（フォルダ保存用）
-  let _formImageExt     = 'png';
-
-  function handleFormImageFile(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    _formImageFile = file;
-    _formImageExt  = file.name.split('.').pop().toLowerCase() || 'png';
-    const reader = new FileReader();
-    reader.onload = ev => {
-      _formImageDataUrl = ev.target.result;
-      document.getElementById('form-image-preview').src   = ev.target.result;
-      document.getElementById('form-image-preview').style.display = 'block';
-      document.getElementById('form-image-name').textContent = file.name;
-    };
-    reader.readAsDataURL(file);
-    e.target.value = '';
-  }
-
-    function openAddModal() {
+  function openAddModal() {
     const prompt = document.getElementById('prompt-input').value.trim();
     if (prompt) document.getElementById('form-prompt').value = prompt;
     const sel = document.getElementById('tool-select');
@@ -1161,11 +994,6 @@
     document.getElementById('add-modal').classList.remove('open');
     document.getElementById('form-title').value  = '';
     document.getElementById('form-url').value    = '';
-    _formImageDataUrl = null;
-    _formImageFile    = null;
-    document.getElementById('form-image-preview').style.display = 'none';
-    document.getElementById('form-image-preview').src = '';
-    document.getElementById('form-image-name').textContent = '';
     document.getElementById('form-prompt').value = '';
   }
 
@@ -1181,22 +1009,6 @@
       tool:     document.getElementById('form-tool').value,
       date:     todayStr(),
     };
-
-    // フォルダが選択されていれば画像ファイルもセットで保存
-    if (_folderHandle && _formImageFile) {
-      try {
-        const imgName = `${creation.date}_${creation.id}.${_formImageExt}`;
-        const fh = await _folderHandle.getFileHandle(imgName, { create: true });
-        const w  = await fh.createWritable();
-        await w.write(_formImageFile);
-        await w.close();
-      } catch (e) { console.warn('画像ファイルの保存に失敗:', e); }
-    }
-
-    // フォルダ未選択の場合は localImageUrl（Base64）をメモリに持つ
-    if (!_folderHandle && _formImageDataUrl) {
-      creation.localImageUrl = _formImageDataUrl;
-    }
 
     await appendCreation(creation);
     await buildGallery();
@@ -1333,12 +1145,6 @@
     buildTaskList();
     buildHistoryGrid();
     loadNews();
-
-    // GASからルーティン実績を同期（バックグラウンドで）
-    syncFromGAS().then(() => {
-      buildTaskList();
-      buildHistoryGrid();
-    });
 
     try {
       const stored = await _getStoredHandle();
